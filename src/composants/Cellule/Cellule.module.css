@@ -1,34 +1,53 @@
 /* =============================================
-   STYLES CELLULE OPTIMISÉS
+   CELLULE RESPONSIVE OPTIMISÉE
    ============================================= */
 
 .cellule {
-  width: 50px;
-  height: 50px;
+  /* Taille responsive basée sur les propriétés CSS personnalisées */
+  width: var(--taille-cellule-desktop);
+  height: var(--taille-cellule-desktop);
+  
+  /* Style de base */
   border: 1px solid #ccc;
   text-align: center;
-  font-size: 18px;
+  font-size: calc(var(--taille-cellule-desktop) * 0.3);
   font-weight: bold;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', monospace;
   cursor: pointer;
   transition: all 0.2s ease;
   background-color: white;
   outline: none;
-  border-radius: 2px;
+  border-radius: 3px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  
+  /* Compatible tactile */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Suppression du zoom sur double-tap */
+  touch-action: manipulation;
+  
+  /* Sélection du texte désactivée */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-/* États interactifs */
+/* États interactifs desktop */
+@media (hover: hover) and (pointer: fine) {
+  .cellule:hover:not(:disabled) {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+    transform: scale(1.02);
+  }
+}
+
 .cellule:focus {
   border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-  z-index: 1;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  z-index: 10;
   position: relative;
-}
-
-.cellule:hover:not(:disabled) {
-  background-color: #f8f9fa;
-  border-color: #adb5bd;
 }
 
 /* États de la cellule */
@@ -47,20 +66,22 @@
 .celluleSelectionnee {
   background-color: #e3f2fd;
   border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.3);
-  z-index: 2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3);
+  z-index: 5;
   position: relative;
 }
 
 .celluleSurlignee {
   background-color: #fff3e0;
+  border-color: #ffb74d;
 }
 
 .celluleInvalide {
   background-color: #ffebee;
   color: #d32f2f;
   border-color: #d32f2f;
-  animation: shake 0.5s ease-in-out;
+  animation: secousse 0.5s ease-in-out;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
 }
 
 .celluleDesactivee {
@@ -69,7 +90,14 @@
   background-color: #f5f5f5;
 }
 
-/* Message d'erreur caché par défaut */
+/* Animation d'erreur */
+@keyframes secousse {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Message d'erreur caché pour l'accessibilité */
 .messageErreur {
   position: absolute;
   left: -9999px;
@@ -78,51 +106,70 @@
   overflow: hidden;
 }
 
-/* Animations */
-@keyframes shake {
-  0%, 100% { 
-    transform: translateX(0); 
-  }
-  25% { 
-    transform: translateX(-3px); 
-  }
-  75% { 
-    transform: translateX(3px); 
-  }
-}
+/* =============================================
+   POINTS DE RUPTURE RESPONSIVE
+   ============================================= */
 
-/* Responsive Design */
+/* Tablette */
 @media (max-width: 768px) {
   .cellule {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
+    width: var(--taille-cellule-tablette);
+    height: var(--taille-cellule-tablette);
+    font-size: calc(var(--taille-cellule-tablette) * 0.35);
+    border-radius: 2px;
   }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
   .cellule {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
+    width: var(--taille-cellule-mobile);
+    height: var(--taille-cellule-mobile);
+    font-size: calc(var(--taille-cellule-mobile) * 0.4);
+    border-radius: 2px;
+    border-width: 1px;
   }
-}
-
-/* Accessibilité */
-@media (prefers-contrast: high) {
-  .cellule {
-    border-width: 2px;
+  
+  /* Retour tactile amélioré */
+  .cellule:active {
+    transform: scale(0.95);
+    background-color: rgba(0, 123, 255, 0.1);
   }
   
   .celluleSelectionnee {
-    border-width: 3px;
-  }
-  
-  .celluleInvalide {
-    border-width: 2px;
+    transform: scale(1.05);
   }
 }
 
+/* Très petit mobile */
+@media (max-width: 360px) {
+  .cellule {
+    font-size: calc(var(--taille-cellule-mobile) * 0.45);
+    font-weight: 800;
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ & PRÉFÉRENCES
+   ============================================= */
+
+/* Contraste élevé */
+@media (prefers-contrast: high) {
+  .cellule {
+    border-width: 2px;
+    font-weight: 900;
+  }
+  
+  .celluleSelectionnee {
+    border-width: 4px;
+  }
+  
+  .celluleInvalide {
+    border-width: 3px;
+  }
+}
+
+/* Mouvement réduit */
 @media (prefers-reduced-motion: reduce) {
   .cellule {
     transition: none;
@@ -130,19 +177,6 @@
   
   .celluleInvalide {
     animation: none;
-  }
-}
-
-/* Support pour les appareils tactiles */
-@media (hover: none) and (pointer: coarse) {
-  .cellule {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .cellule:hover {
-    background-color: white;
-    border-color: #ccc;
   }
 }
 
@@ -168,7 +202,28 @@
     background-color: #744210;
   }
   
+  .celluleInvalide {
+    background-color: #742a2a;
+    color: #fed7d7;
+    border-color: #e53e3e;
+  }
+  
   .cellule:hover:not(:disabled) {
     background-color: #4a5568;
+  }
+}
+
+/* =============================================
+   OPTIMISATIONS SPÉCIALES
+   ============================================= */
+
+/* Support pour les claviers virtuels mobile */
+@media (max-width: 480px) {
+  .cellule {
+    caret-color: transparent; /* Cacher le curseur de saisie */
+  }
+  
+  .cellule:focus {
+    caret-color: transparent;
   }
 }

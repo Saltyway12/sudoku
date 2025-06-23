@@ -1,143 +1,214 @@
+/* =============================================
+   STYLES GLOBAUX RESPONSIVE SUDOKU
+   ============================================= */
+
+/* Variables CSS et reset */
 :root {
+  /* Tailles des cellules responsives */
+  --taille-cellule-desktop: 60px;
+  --taille-cellule-tablette: 45px;
+  --taille-cellule-mobile: calc(min(85vw, 350px) / 9);
+  
+  /* Espacement */
+  --espacement-grille: 2px;
+  --bordure-grille: 3px;
+  --espacement-section: 4px;
+  
+  /* Couleurs du thème */
   --couleur-primaire: #007bff;
-  --couleur-secondaire: #6c757d;
   --couleur-succes: #28a745;
-  --couleur-info: #17a2b8;
   --couleur-avertissement: #ffc107;
-  --rayon-bordure: 8px;
+  --couleur-danger: #dc3545;
+  --couleur-info: #17a2b8;
+  --couleur-secondaire: #6c757d;
+  
+  /* Points de rupture responsive */
+  --mobile-max: 480px;
+  --tablette-max: 768px;
+  --desktop-min: 769px;
 }
 
+/* Reset global */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  line-height: 1.6;
 }
 
+/* Conteneur principal de l'application */
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* En-tête de l'application */
 .app-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   color: white;
 }
 
 .app-header h1 {
   font-size: 3rem;
-  margin: 0 0 20px 0;
+  font-weight: bold;
+  margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .info-jeu {
   display: flex;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
-  gap: 30px;
   flex-wrap: wrap;
 }
 
-.minuteur {
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px 20px;
-  border-radius: 25px;
-  backdrop-filter: blur(10px);
-}
-
-.statut {
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 8px 16px;
+.minuteur, .statut {
+  background: rgba(255,255,255,0.1);
+  padding: 0.5rem 1rem;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.conteneur-jeu {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: var(--rayon-bordure);
-  padding: 30px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
-  max-width: 100%;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-weight: 500;
 }
 
+/* Conteneur principal du jeu */
+.conteneur-jeu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(255,255,255,0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  max-width: 100%;
+  width: fit-content;
+}
+
+/* Contrôles du jeu */
 .controles {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
 }
 
 .selecteur-difficulte {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.selecteur-difficulte label {
+  font-weight: 600;
+  color: #333;
 }
 
 .selecteur-difficulte select {
-  padding: 8px 12px;
+  padding: 0.5rem 1rem;
   border: 2px solid #ddd;
-  border-radius: var(--rayon-bordure);
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 1rem;
   background: white;
   cursor: pointer;
+  transition: border-color 0.2s ease;
 }
 
+.selecteur-difficulte select:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+/* Styles des boutons */
 .boutons {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .btn {
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: var(--rayon-bordure);
-  font-size: 14px;
-  font-weight: bold;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  min-height: 44px; /* Compatible tactile */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  user-select: none;
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
-  transform: none;
+  transform: none !important;
 }
 
-.btn-primaire { background: var(--couleur-primaire); color: white; }
-.btn-secondaire { background: var(--couleur-secondaire); color: white; }
-.btn-info { background: var(--couleur-info); color: white; }
-.btn-avertissement { background: var(--couleur-avertissement); color: #212529; }
-.btn-succes { background: var(--couleur-succes); color: white; }
+.btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
+.btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.btn-primaire {
+  background: var(--couleur-primaire);
+  color: white;
+}
+
+.btn-secondaire {
+  background: var(--couleur-secondaire);
+  color: white;
+}
+
+.btn-info {
+  background: var(--couleur-info);
+  color: white;
+}
+
+.btn-avertissement {
+  background: var(--couleur-avertissement);
+  color: #212529;
+}
+
+.btn-succes {
+  background: var(--couleur-succes);
+  color: white;
+}
+
+/* Statistiques du jeu */
 .statistiques {
   display: flex;
+  gap: 2rem;
   justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px solid #eee;
   flex-wrap: wrap;
 }
 
@@ -145,33 +216,352 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 0.25rem;
+  padding: 1rem;
+  background: rgba(0,123,255,0.1);
+  border-radius: 12px;
+  min-width: 80px;
 }
 
 .label-stat {
-  font-size: 14px;
+  font-size: 0.8rem;
   color: #666;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 500;
 }
 
 .valeur-stat {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: var(--couleur-primaire);
+}
+
+/* Clavier numérique mobile */
+.clavier-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #ddd;
+  padding: 1rem;
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+.clavier-mobile.actif {
+  transform: translateY(0);
+}
+
+.clavier-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
   color: #333;
 }
 
-@media (max-width: 768px) {
-  .app { padding: 10px; }
-  .app-header h1 { font-size: 2rem; }
-  .info-jeu { flex-direction: column; gap: 15px; }
-  .conteneur-jeu { padding: 20px; }
-  .controles { flex-direction: column; align-items: stretch; }
-  .boutons { justify-content: center; }
+.clavier-fermer {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
+.clavier-fermer:hover {
+  background-color: #f0f0f0;
+}
+
+.grille-nombres {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.btn-nombre {
+  aspect-ratio: 1;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: 2px solid var(--couleur-primaire);
+  background: white;
+  color: var(--couleur-primaire);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.btn-nombre:active {
+  background: var(--couleur-primaire);
+  color: white;
+  transform: scale(0.95);
+}
+
+.btn-effacer {
+  grid-column: span 3;
+  background: var(--couleur-danger);
+  color: white;
+  border-color: var(--couleur-danger);
+  font-size: 1.1rem;
+}
+
+.btn-effacer:active {
+  background: #c82333;
+  border-color: #c82333;
+}
+
+/* Overlay pour mobile */
+.overlay-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.overlay-mobile.actif {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* =============================================
+   DESIGN RESPONSIVE
+   ============================================= */
+
+/* Tablette */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .info-jeu {
+    gap: 1rem;
+  }
+  
+  .conteneur-jeu {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .boutons {
+    gap: 0.75rem;
+  }
+  
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
+  }
+  
+  .statistiques {
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile */
 @media (max-width: 480px) {
-  .boutons { flex-direction: column; }
-  .btn { width: 100%; }
+  .app {
+    padding: 0.5rem;
+  }
+  
+  .app-header {
+    margin-bottom: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .info-jeu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .minuteur, .statut {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .conteneur-jeu {
+    padding: 1rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .controles {
+    gap: 0.75rem;
+  }
+  
+  .selecteur-difficulte {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .boutons {
+    gap: 0.5rem;
+  }
+  
+  .btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .statistiques {
+    gap: 1rem;
+  }
+  
+  .stat {
+    padding: 0.75rem;
+    min-width: 70px;
+  }
+  
+  .label-stat {
+    font-size: 0.75rem;
+  }
+  
+  .valeur-stat {
+    font-size: 1.25rem;
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 360px) {
+  .app-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .btn {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .statistiques {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  .stat {
+    padding: 0.5rem;
+    min-width: 60px;
+  }
+}
+
+/* Styles pour appareils tactiles */
+@media (hover: none) and (pointer: coarse) {
+  /* Suppression des effets survol sur tactile */
+  .btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .selecteur-difficulte select:hover {
+    border-color: #ddd;
+  }
+  
+  /* Focus amélioré pour tactile */
+  .btn:focus {
+    outline: 3px solid rgba(0,123,255,0.3);
+    outline-offset: 2px;
+  }
+}
+
+/* Mode paysage mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .app {
+    padding: 0.25rem;
+  }
+  
+  .app-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .info-jeu {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .conteneur-jeu {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .conteneur-jeu {
+    border: 2px solid #000;
+    background: white;
+  }
+  
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  }
+  
+  .app {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  }
+  
+  .conteneur-jeu {
+    background: rgba(45, 55, 72, 0.95);
+    color: #e2e8f0;
+  }
+  
+  .selecteur-difficulte label {
+    color: #e2e8f0;
+  }
+  
+  .selecteur-difficulte select {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+  }
+  
+  .clavier-mobile {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-top-color: #4a5568;
+  }
+  
+  .btn-nombre {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+  }
 }

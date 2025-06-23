@@ -1,13 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="sudoku_favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sudoku</title>
+    
+    <!-- Meta tags essentiels pour mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- PWA et mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sudoku">
+    
+    <!-- Couleur de thème */
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-navbutton-color" content="#667eea">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Prévention du zoom accidentel -->
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Description pour SEO -->
+    <meta name="description" content="Jeu de Sudoku moderne et responsive avec trois niveaux de difficulté. Compatible mobile et desktop.">
+    <meta name="keywords" content="sudoku, jeu, puzzle, logique, mobile, responsive">
+    <meta name="author" content="Saltyway12">
+    
+    <!-- Open Graph pour partage social -->
+    <meta property="og:title" content="Sudoku - Jeu de Puzzle Logique">
+    <meta property="og:description" content="Jeu de Sudoku moderne avec interface responsive">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/sudoku-preview.png">
+    
+    <!-- Titre de la page -->
+    <title>Sudoku - Jeu de Puzzle Logique</title>
+    
+    <!-- Preload des polices critiques -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- CSS critique inline pour éviter le FOUC -->
+    <style>
+      /* CSS critique pour le chargement initial */
+      #root {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Indicateur de chargement */
+      .chargement-initial {
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+        opacity: 0.8;
+      }
+      
+      /* Suppression du focus outline par défaut sur mobile */
+      @media (hover: none) and (pointer: coarse) {
+        *:focus {
+          outline: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Conteneur principal de l'application -->
+    <div id="root">
+      <!-- Indicateur de chargement initial -->
+      <div class="chargement-initial">
+        <p>Chargement du Sudoku...</p>
+      </div>
+    </div>
+    
+    <!-- Script principal de l'application -->
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Script pour la détection mobile (optionnel) -->
+    <script>
+      // Détection mobile basique pour debug
+      if (window.innerWidth <= 480) {
+        document.documentElement.classList.add('mobile');
+      }
+      
+      // Prévention du zoom sur double-tap iOS
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      
+      // Gestion de l'orientation pour debug
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          window.scrollTo(0, 1);
+        }, 100);
+      });
+    </script>
   </body>
 </html>

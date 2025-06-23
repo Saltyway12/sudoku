@@ -1,61 +1,205 @@
+/* =============================================
+   GRILLE SUDOKU RESPONSIVE AVEC CSS GRID
+   ============================================= */
+
 .grilleSudoku {
-  display: inline-block;
-  border: 3px solid #333;
+  /* Layout moderne avec CSS Grid */
+  display: grid;
+  grid-template-columns: repeat(9, var(--taille-cellule-desktop));
+  grid-template-rows: repeat(9, var(--taille-cellule-desktop));
+  gap: var(--espacement-grille);
+  
+  /* Style visuel */
+  border: var(--bordure-grille) solid #333;
   background-color: #333;
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeInScale 0.5s ease-out;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: var(--espacement-grille);
+  
+  /* Animation d'entrée */
+  animation: apparitionEchelle 0.6s ease-out;
+  
+  /* Centrage */
+  margin: 0 auto;
+  
+  /* Conteneur responsive */
+  width: fit-content;
+  max-width: 100%;
 }
 
+/* Suppression de l'ancien système de lignes */
 .ligneGrille {
-  display: flex;
+  display: contents; /* Les enfants remontent au conteneur grid parent */
 }
 
-.ligneGrille:nth-child(3n) {
-  margin-bottom: 3px;
+/* Séparateurs visuels des sections 3x3 */
+.grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+  border-right: var(--espacement-section) solid #333;
 }
 
-.ligneGrille:not(:nth-child(3n)) {
-  margin-bottom: 1px;
+.grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+.grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+  border-bottom: var(--espacement-section) solid #333;
 }
 
-.ligneGrille :global(.cellule):nth-child(3n) {
-  margin-right: 3px;
-}
-
-.ligneGrille :global(.cellule):not(:nth-child(3n)) {
-  margin-right: 1px;
-}
-
-@keyframes fadeInScale {
+/* Animation d'apparition */
+@keyframes apparitionEchelle {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.9) rotateX(10deg);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotateX(0deg);
   }
 }
 
+/* =============================================
+   SYSTÈME DE GRILLE RESPONSIVE
+   ============================================= */
+
+/* Tablette */
 @media (max-width: 768px) {
   .grilleSudoku {
-    margin: 10px;
+    grid-template-columns: repeat(9, var(--taille-cellule-tablette));
+    grid-template-rows: repeat(9, var(--taille-cellule-tablette));
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
 }
 
+/* Mobile - Grille fluide */
 @media (max-width: 480px) {
   .grilleSudoku {
-    margin: 5px;
+    /* Grille responsive qui s'adapte à l'écran */
+    width: min(90vw, 350px);
+    height: min(90vw, 350px);
+    aspect-ratio: 1;
+    
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    
+    border-radius: 8px;
     border-width: 2px;
+    gap: 1px;
+    padding: 1px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   }
   
-  .ligneGrille:nth-child(3n) {
-    margin-bottom: 2px;
+  /* Séparateurs réduits sur mobile */
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-width: 2px;
   }
   
-  .ligneGrille :global(.cellule):nth-child(3n) {
-    margin-right: 2px;
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-width: 2px;
   }
+}
+
+/* Très petit mobile */
+@media (max-width: 360px) {
+  .grilleSudoku {
+    width: min(95vw, 320px);
+    height: min(95vw, 320px);
+    border-radius: 6px;
+  }
+}
+
+/* =============================================
+   ÉTATS SPÉCIAUX DU JEU
+   ============================================= */
+
+/* Grille en cours de résolution */
+.grilleSudoku[data-solving="true"] {
+  pointer-events: none;
+  opacity: 0.8;
+  filter: saturate(0.7);
+}
+
+/* Grille terminée */
+.grilleSudoku[data-completed="true"] {
+  animation: celebration 1s ease-in-out;
+  box-shadow: 0 0 30px rgba(40, 167, 69, 0.5);
+}
+
+@keyframes celebration {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* =============================================
+   MODE PAYSAGE MOBILE
+   ============================================= */
+
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+  .grilleSudoku {
+    width: min(50vh, 300px);
+    height: min(50vh, 300px);
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ
+   ============================================= */
+
+/* Mode contraste élevé */
+@media (prefers-contrast: high) {
+  .grilleSudoku {
+    border-width: 4px;
+    border-color: #000;
+    background-color: #000;
+  }
+}
+
+/* Mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  .grilleSudoku {
+    animation: none;
+  }
+  
+  .grilleSudoku[data-completed="true"] {
+    animation: none;
+  }
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  .grilleSudoku {
+    border-color: #4a5568;
+    background-color: #4a5568;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-color: #4a5568;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: #4a5568;
+  }
+}
+
+/* =============================================
+   OPTIMISATIONS PERFORMANCE
+   ============================================= */
+
+.grilleSudoku {
+  /* Optimisations GPU */
+  will-change: transform;
+  transform: translateZ(0);
+  
+  /* Isolation pour éviter les repaints */
+  isolation: isolate;
+}
+
+/* Conteneur pour le verrouillage du défilement mobile */
+.conteneur-grille {
+  position: relative;
+  overflow: hidden;
+}
+
+.conteneur-grille.mobile-actif {
+  touch-action: none;
 }
