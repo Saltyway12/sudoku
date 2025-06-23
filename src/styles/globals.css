@@ -1,0 +1,177 @@
+:root {
+  --couleur-primaire: #007bff;
+  --couleur-secondaire: #6c757d;
+  --couleur-succes: #28a745;
+  --couleur-info: #17a2b8;
+  --couleur-avertissement: #ffc107;
+  --rayon-bordure: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.info-jeu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.minuteur {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.statut {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.conteneur-jeu {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--rayon-bordure);
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  max-width: 100%;
+}
+
+.controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.selecteur-difficulte {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selecteur-difficulte select {
+  padding: 8px 12px;
+  border: 2px solid #ddd;
+  border-radius: var(--rayon-bordure);
+  font-size: 16px;
+  background: white;
+  cursor: pointer;
+}
+
+.boutons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--rayon-bordure);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primaire { background: var(--couleur-primaire); color: white; }
+.btn-secondaire { background: var(--couleur-secondaire); color: white; }
+.btn-info { background: var(--couleur-info); color: white; }
+.btn-avertissement { background: var(--couleur-avertissement); color: #212529; }
+.btn-succes { background: var(--couleur-succes); color: white; }
+
+.statistiques {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.label-stat {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.valeur-stat {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .app { padding: 10px; }
+  .app-header h1 { font-size: 2rem; }
+  .info-jeu { flex-direction: column; gap: 15px; }
+  .conteneur-jeu { padding: 20px; }
+  .controles { flex-direction: column; align-items: stretch; }
+  .boutons { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .boutons { flex-direction: column; }
+  .btn { width: 100%; }
+}
