@@ -8,28 +8,29 @@
   grid-template-columns: repeat(9, var(--taille-cellule-desktop));
   grid-template-rows: repeat(9, var(--taille-cellule-desktop));
   gap: var(--espacement-grille);
-  
+
   /* Style visuel */
   border: var(--bordure-grille) solid #333;
   background-color: #333;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   padding: var(--espacement-grille);
-  
+
   /* Animation d'entrée */
   animation: apparitionEchelle 0.6s ease-out;
-  
+
   /* Centrage */
   margin: 0 auto;
-  
-  /* Conteneur responsive */
-  width: fit-content;
-  max-width: 100%;
+
+  /* Conteneur responsive - CORRECTION */
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
-/* Suppression de l'ancien système de lignes */
 .ligneGrille {
-  display: contents; /* Les enfants remontent au conteneur grid parent */
+  display: contents;
 }
 
 /* Séparateurs visuels des sections 3x3 */
@@ -71,26 +72,26 @@
 /* Mobile - Grille fluide */
 @media (max-width: 480px) {
   .grilleSudoku {
-    /* Grille responsive qui s'adapte à l'écran */
-    width: min(90vw, 350px);
-    height: min(90vw, 350px);
+    width: 100vw;
+    height: 100vw;
+    max-width: 350px;
+    max-height: 350px;
     aspect-ratio: 1;
-    
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    
     border-radius: 8px;
     border-width: 2px;
     gap: 1px;
     padding: 1px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
   }
-  
+
   /* Séparateurs réduits sur mobile */
   .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
     border-right-width: 2px;
   }
-  
+
   .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
   .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
     border-bottom-width: 2px;
@@ -100,8 +101,10 @@
 /* Très petit mobile */
 @media (max-width: 360px) {
   .grilleSudoku {
-    width: min(95vw, 320px);
-    height: min(95vw, 320px);
+    width: 95vw;
+    height: 95vw;
+    max-width: 320px;
+    max-height: 320px;
     border-radius: 6px;
   }
 }
@@ -136,6 +139,8 @@
   .grilleSudoku {
     width: min(50vh, 300px);
     height: min(50vh, 300px);
+    max-width: 100vw;
+    max-height: 100vw;
   }
 }
 
@@ -157,7 +162,6 @@
   .grilleSudoku {
     animation: none;
   }
-  
   .grilleSudoku[data-completed="true"] {
     animation: none;
   }
@@ -170,11 +174,9 @@
     background-color: #4a5568;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   }
-  
   .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
     border-right-color: #4a5568;
   }
-  
   .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
   .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
     border-bottom-color: #4a5568;
@@ -189,7 +191,7 @@
   /* Optimisations GPU */
   will-change: transform;
   transform: translateZ(0);
-  
+
   /* Isolation pour éviter les repaints */
   isolation: isolate;
 }
