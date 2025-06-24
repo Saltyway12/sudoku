@@ -3,26 +3,22 @@
    ============================================= */
 
 .grilleSudoku {
-  /* Layout moderne avec CSS Grid */
   display: grid;
   grid-template-columns: repeat(9, var(--taille-cellule-desktop));
   grid-template-rows: repeat(9, var(--taille-cellule-desktop));
   gap: var(--espacement-grille);
 
-  /* Style visuel */
-  border: var(--bordure-grille) solid #333;
+  /* Bordure principale ÉPAISSE */
+  border: 6px solid #333;
   background-color: #333;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   padding: var(--espacement-grille);
 
-  /* Animation d'entrée */
   animation: apparitionEchelle 0.6s ease-out;
 
-  /* Centrage */
   margin: 0 auto;
 
-  /* Conteneur responsive - CORRECTION */
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
@@ -33,17 +29,15 @@
   display: contents;
 }
 
-/* Séparateurs visuels des sections 3x3 */
+/* Séparateurs visuels des sections 3x3 ÉPAIS */
 .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-  border-right: var(--espacement-section) solid #333;
+  border-right: 4px solid #333;
 }
-
 .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
 .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-  border-bottom: var(--espacement-section) solid #333;
+  border-bottom: 4px solid #333;
 }
 
-/* Animation d'apparition */
 @keyframes apparitionEchelle {
   from {
     opacity: 0;
@@ -80,21 +74,20 @@
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
     border-radius: 8px;
-    border-width: 2px;
+    border-width: 6px;
     gap: 1px;
     padding: 1px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
   }
 
-  /* Séparateurs réduits sur mobile */
+  /* Séparateurs ÉPAIS sur mobile */
   .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-width: 2px;
+    border-right-width: 4px;
   }
-
   .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
   .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-width: 2px;
+    border-bottom-width: 4px;
   }
 }
 
@@ -113,14 +106,12 @@
    ÉTATS SPÉCIAUX DU JEU
    ============================================= */
 
-/* Grille en cours de résolution */
 .grilleSudoku[data-solving="true"] {
   pointer-events: none;
   opacity: 0.8;
   filter: saturate(0.7);
 }
 
-/* Grille terminée */
 .grilleSudoku[data-completed="true"] {
   animation: celebration 1s ease-in-out;
   box-shadow: 0 0 30px rgba(40, 167, 69, 0.5);
@@ -148,16 +139,14 @@
    ACCESSIBILITÉ
    ============================================= */
 
-/* Mode contraste élevé */
 @media (prefers-contrast: high) {
   .grilleSudoku {
-    border-width: 4px;
+    border-width: 8px !important;
     border-color: #000;
     background-color: #000;
   }
 }
 
-/* Mouvement réduit */
 @media (prefers-reduced-motion: reduce) {
   .grilleSudoku {
     animation: none;
@@ -167,7 +156,6 @@
   }
 }
 
-/* Mode sombre */
 @media (prefers-color-scheme: dark) {
   .grilleSudoku {
     border-color: #4a5568;
@@ -188,11 +176,8 @@
    ============================================= */
 
 .grilleSudoku {
-  /* Optimisations GPU */
   will-change: transform;
   transform: translateZ(0);
-
-  /* Isolation pour éviter les repaints */
   isolation: isolate;
 }
 
