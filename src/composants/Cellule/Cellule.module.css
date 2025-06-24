@@ -1,171 +1,402 @@
 /* =============================================
-   CELLULE RESPONSIVE OPTIMISÉE
+   CELLULE SUDOKU RESPONSIVE ULTRA-OPTIMISÉE
    ============================================= */
 
 .cellule {
-  /* Taille responsive basée sur les propriétés CSS personnalisées */
+  /* Taille responsive utilisant les variables CSS */
   width: var(--taille-cellule-desktop);
   height: var(--taille-cellule-desktop);
   
-  /* Style de base */
-  border: 1px solid #ccc;
+  /* Style de base optimisé */
+  border: 1px solid #d1d5db;
   text-align: center;
-  font-size: calc(var(--taille-cellule-desktop) * 0.3);
-  font-weight: bold;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', monospace;
+  font-size: calc(var(--taille-cellule-desktop) * 0.32);
+  font-weight: 600;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: white;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #ffffff;
   outline: none;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
   
-  /* Compatible tactile */
+  /* Compatibilité tactile améliorée */
   min-height: 44px;
   min-width: 44px;
   
-  /* Suppression du zoom sur double-tap */
+  /* Optimisations tactiles */
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   
-  /* Sélection du texte désactivée */
+  /* Désactivation sélection texte */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  
+  /* Affichage contenu centré */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Optimisations performance */
+  will-change: transform, background-color;
+  contain: layout style paint;
 }
 
-/* États interactifs desktop */
+/* =============================================
+   ÉTATS INTERACTIFS DESKTOP
+   ============================================= */
+
 @media (hover: hover) and (pointer: fine) {
-  .cellule:hover:not(:disabled) {
-    background-color: #f8f9fa;
-    border-color: #adb5bd;
+  .cellule:hover:not(:disabled):not(.celluleInitiale) {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
     transform: scale(1.02);
+    box-shadow: 
+      inset 0 1px 2px rgba(0, 0, 0, 0.05),
+      0 4px 12px rgba(0, 0, 0, 0.15);
   }
 }
 
 .cellule:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.3),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
   z-index: 10;
   position: relative;
+  transform: scale(1.02);
 }
 
-/* États de la cellule */
+/* =============================================
+   ÉTATS DE CELLULE OPTIMISÉS
+   ============================================= */
+
+/* Cellule initiale (non modifiable) */
 .celluleInitiale {
-  background-color: #f8f9fa;
-  color: #333;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #1e293b;
   cursor: not-allowed;
-  font-weight: 900;
+  font-weight: 700;
+  border-color: #cbd5e1;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .celluleInitiale:hover {
-  background-color: #f8f9fa;
-  border-color: #ccc;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: #cbd5e1;
+  transform: none;
 }
 
+/* Cellule sélectionnée */
 .celluleSelectionnee {
-  background-color: #e3f2fd;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3);
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.3),
+    0 4px 12px rgba(59, 130, 246, 0.2);
   z-index: 5;
+  position: relative;
+  transform: scale(1.05);
+  color: #1e40af;
+  font-weight: 700;
+}
+
+/* Cellules de même valeur surlignées */
+.celluleSurlignee {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #f59e0b;
+  color: #92400e;
+  font-weight: 600;
+  box-shadow: 
+    inset 0 1px 2px rgba(245, 158, 11, 0.1),
+    0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
+/* Cellule avec erreur */
+.celluleInvalide {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #dc2626;
+  border-color: #ef4444;
+  font-weight: 700;
+  animation: secousseErreur 0.5s ease-in-out;
+  box-shadow: 
+    0 0 0 2px rgba(239, 68, 68, 0.3),
+    0 4px 12px rgba(239, 68, 68, 0.2);
+  z-index: 3;
   position: relative;
 }
 
-.celluleSurlignee {
-  background-color: #fff3e0;
-  border-color: #ffb74d;
-}
-
-.celluleInvalide {
-  background-color: #ffebee;
-  color: #d32f2f;
-  border-color: #d32f2f;
-  animation: secousse 0.5s ease-in-out;
-  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
-}
-
+/* Cellule désactivée */
 .celluleDesactivee {
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: not-allowed;
-  background-color: #f5f5f5;
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  filter: grayscale(50%);
 }
 
-/* Animation d'erreur */
-@keyframes secousse {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  75% { transform: translateX(3px); }
+/* Cellule avec indice */
+.celluleIndice {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  color: #047857;
+  font-weight: 600;
+  animation: pulsationIndice 1s ease-in-out 2;
 }
 
-/* Message d'erreur caché pour l'accessibilité */
+/* =============================================
+   ANIMATIONS AMÉLIORÉES
+   ============================================= */
+
+@keyframes secousseErreur {
+  0%, 100% { transform: translateX(0) scale(1.05); }
+  20% { transform: translateX(-4px) scale(1.05); }
+  40% { transform: translateX(4px) scale(1.05); }
+  60% { transform: translateX(-2px) scale(1.05); }
+  80% { transform: translateX(2px) scale(1.05); }
+}
+
+@keyframes pulsationIndice {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      inset 0 1px 2px rgba(0, 0, 0, 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  50% { 
+    transform: scale(1.08);
+    box-shadow: 
+      0 0 0 3px rgba(16, 185, 129, 0.3),
+      0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+}
+
+/* Animation d'apparition */
+@keyframes apparitionCellule {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cellule {
+  animation: apparitionCellule 0.3s ease-out;
+}
+
+/* Message d'erreur pour accessibilité */
 .messageErreur {
   position: absolute;
   left: -9999px;
   width: 1px;
   height: 1px;
   overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
 
 /* =============================================
-   POINTS DE RUPTURE RESPONSIVE
+   RESPONSIVE TABLETTE (768px et moins)
    ============================================= */
 
-/* Tablette */
 @media (max-width: 768px) {
   .cellule {
     width: var(--taille-cellule-tablette);
     height: var(--taille-cellule-tablette);
     font-size: calc(var(--taille-cellule-tablette) * 0.35);
-    border-radius: 2px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  
+  .celluleSelectionnee {
+    transform: scale(1.04);
+  }
+  
+  .cellule:focus {
+    transform: scale(1.04);
   }
 }
 
-/* Mobile */
+/* =============================================
+   RESPONSIVE MOBILE (480px et moins)
+   ============================================= */
+
 @media (max-width: 480px) {
   .cellule {
+    /* Utilisation des variables CSS pour cohérence */
     width: var(--taille-cellule-mobile);
     height: var(--taille-cellule-mobile);
     font-size: calc(var(--taille-cellule-mobile) * 0.4);
     border-radius: 2px;
     border-width: 1px;
+    min-height: unset;
+    min-width: unset;
+    font-weight: 700;
   }
   
-  /* Retour tactile amélioré */
-  .cellule:active {
+  /* Retour tactile amélioré pour mobile */
+  .cellule:active:not(.celluleInitiale) {
     transform: scale(0.95);
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: rgba(59, 130, 246, 0.1);
+    transition: transform 0.1s ease;
   }
   
   .celluleSelectionnee {
-    transform: scale(1.05);
+    transform: scale(1.03);
+    box-shadow: 
+      0 0 0 2px rgba(59, 130, 246, 0.4),
+      0 2px 8px rgba(59, 130, 246, 0.2);
   }
-}
-
-/* Très petit mobile */
-@media (max-width: 360px) {
-  .cellule {
-    font-size: calc(var(--taille-cellule-mobile) * 0.45);
+  
+  .cellule:focus {
+    transform: scale(1.03);
+    box-shadow: 
+      0 0 0 2px rgba(59, 130, 246, 0.4),
+      0 2px 8px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Optimisation taille police mobile */
+  .celluleInitiale {
+    font-weight: 800;
+  }
+  
+  .celluleInvalide {
     font-weight: 800;
   }
 }
 
+/* Très petit mobile (360px et moins) */
+@media (max-width: 360px) {
+  .cellule {
+    width: var(--taille-cellule-mobile);
+    height: var(--taille-cellule-mobile);
+    font-size: calc(var(--taille-cellule-mobile) * 0.45);
+    font-weight: 800;
+    border-radius: 1px;
+  }
+  
+  .celluleSelectionnee {
+    transform: scale(1.02);
+  }
+}
+
+/* Mode paysage mobile */
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+  .cellule {
+    width: var(--taille-cellule-mobile);
+    height: var(--taille-cellule-mobile);
+    font-size: calc(var(--taille-cellule-mobile) * 0.4);
+  }
+}
+
 /* =============================================
-   ACCESSIBILITÉ & PRÉFÉRENCES
+   THÈME SOMBRE OPTIMISÉ
+   ============================================= */
+
+@media (prefers-color-scheme: dark) {
+  .cellule {
+    background-color: #1f2937;
+    color: #f9fafb;
+    border-color: #4b5563;
+    box-shadow: 
+      inset 0 1px 2px rgba(0, 0, 0, 0.2),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Cellule initiale thème sombre */
+  .celluleInitiale {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    color: #d1d5db;
+    border-color: #6b7280;
+  }
+  
+  /* Cellule sélectionnée thème sombre */
+  .celluleSelectionnee {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    border-color: #6366f1;
+    color: #e0e7ff;
+    box-shadow: 
+      0 0 0 3px rgba(99, 102, 241, 0.4),
+      0 4px 12px rgba(99, 102, 241, 0.3);
+  }
+  
+  /* Cellule surlignée thème sombre */
+  .celluleSurlignee {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+    border-color: #d97706;
+    color: #fbbf24;
+  }
+  
+  /* Cellule erreur thème sombre */
+  .celluleInvalide {
+    background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+    color: #fca5a5;
+    border-color: #ef4444;
+    box-shadow: 
+      0 0 0 2px rgba(239, 68, 68, 0.4),
+      0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+  
+  /* Cellule indice thème sombre */
+  .celluleIndice {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    border-color: #10b981;
+    color: #a7f3d0;
+  }
+  
+  /* Hover thème sombre */
+  @media (hover: hover) and (pointer: fine) {
+    .cellule:hover:not(:disabled):not(.celluleInitiale) {
+      background-color: #374151;
+      border-color: #9ca3af;
+    }
+  }
+  
+  /* Cellule désactivée thème sombre */
+  .celluleDesactivee {
+    background-color: #111827;
+    border-color: #374151;
+    color: #6b7280;
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ ET PRÉFÉRENCES
    ============================================= */
 
 /* Contraste élevé */
 @media (prefers-contrast: high) {
   .cellule {
     border-width: 2px;
-    font-weight: 900;
+    font-weight: 800;
   }
   
   .celluleSelectionnee {
     border-width: 4px;
+    box-shadow: 
+      0 0 0 4px rgba(0, 0, 0, 0.8),
+      0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
   .celluleInvalide {
     border-width: 3px;
+    box-shadow: 
+      0 0 0 3px rgba(0, 0, 0, 0.8),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .celluleInitiale {
+    border-width: 2px;
+    border-color: #000;
   }
 }
 
@@ -173,57 +404,265 @@
 @media (prefers-reduced-motion: reduce) {
   .cellule {
     transition: none;
+    animation: none;
   }
   
   .celluleInvalide {
     animation: none;
   }
-}
-
-/* Mode sombre */
-@media (prefers-color-scheme: dark) {
-  .cellule {
-    background-color: #2d3748;
-    color: #e2e8f0;
-    border-color: #4a5568;
+  
+  .celluleIndice {
+    animation: none;
   }
   
-  .celluleInitiale {
-    background-color: #1a202c;
-    color: #a0aec0;
+  .cellule:hover {
+    transform: none;
   }
   
   .celluleSelectionnee {
-    background-color: #2b6cb0;
-    border-color: #3182ce;
+    transform: none;
   }
   
-  .celluleSurlignee {
-    background-color: #744210;
+  .cellule:focus {
+    transform: none;
   }
   
-  .celluleInvalide {
-    background-color: #742a2a;
-    color: #fed7d7;
-    border-color: #e53e3e;
-  }
-  
-  .cellule:hover:not(:disabled) {
-    background-color: #4a5568;
+  .cellule:active {
+    transform: none;
   }
 }
 
 /* =============================================
-   OPTIMISATIONS SPÉCIALES
+   OPTIMISATIONS SPÉCIALES MOBILE
    ============================================= */
 
-/* Support pour les claviers virtuels mobile */
+/* Support claviers virtuels mobile */
 @media (max-width: 480px) {
   .cellule {
-    caret-color: transparent; /* Cacher le curseur de saisie */
+    /* Masquer curseur de saisie */
+    caret-color: transparent;
   }
   
   .cellule:focus {
     caret-color: transparent;
+  }
+  
+  /* Optimisation rendu sur petits écrans */
+  .cellule {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Support tactile amélioré */
+@media (hover: none) and (pointer: coarse) {
+  /* Désactivation effets hover sur tactile */
+  .cellule:hover {
+    background-color: initial;
+    border-color: initial;
+    transform: none;
+    box-shadow: initial;
+  }
+  
+  /* Focus tactile optimisé */
+  .cellule:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.6);
+    outline-offset: 2px;
+  }
+  
+  /* Retour tactile immédiat */
+  .cellule:active:not(.celluleInitiale):not(.celluleDesactivee) {
+    background-color: rgba(59, 130, 246, 0.15);
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+  }
+}
+
+/* =============================================
+   ÉTATS DE VALIDATION EN TEMPS RÉEL
+   ============================================= */
+
+/* Cellule avec valeur correcte */
+.celluleCorrecte {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  color: #047857;
+  box-shadow: 
+    inset 0 1px 2px rgba(16, 185, 129, 0.1),
+    0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+/* Cellule avec conflit potentiel */
+.celluleAvertissement {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #f59e0b;
+  color: #d97706;
+  box-shadow: 
+    inset 0 1px 2px rgba(245, 158, 11, 0.1),
+    0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+/* Cellule en cours de saisie */
+.celluleSaisie {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #0ea5e9;
+  color: #0369a1;
+  transform: scale(1.02);
+  box-shadow: 
+    0 0 0 2px rgba(14, 165, 233, 0.3),
+    0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+/* =============================================
+   MODES DE JEU SPÉCIALISÉS
+   ============================================= */
+
+/* Mode compétition */
+.cellule[data-mode="competition"] {
+  border-width: 1px;
+  transition: all 0.15s ease;
+}
+
+.cellule[data-mode="competition"]:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Mode apprentissage */
+.cellule[data-mode="learning"] {
+  border-radius: 6px;
+  font-size: calc(var(--taille-cellule-desktop) * 0.28);
+}
+
+.cellule[data-mode="learning"] .aide-visuelle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 8px;
+  color: #6b7280;
+  opacity: 0.7;
+}
+
+/* Mode daltonien */
+.cellule[data-accessibility="colorblind"] {
+  border-width: 2px;
+  font-weight: 700;
+}
+
+.cellule[data-accessibility="colorblind"].celluleSelectionnee {
+  border-style: dashed;
+}
+
+.cellule[data-accessibility="colorblind"].celluleInvalide {
+  border-style: dotted;
+  text-decoration: underline;
+}
+
+/* =============================================
+   MICRO-INTERACTIONS ET FEEDBACK
+   ============================================= */
+
+/* Effet de ripple pour validation */
+.cellule.validation-reussie {
+  animation: rippleValidation 0.6s ease-out;
+}
+
+@keyframes rippleValidation {
+  0% {
+    box-shadow: 
+      inset 0 1px 2px rgba(0, 0, 0, 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 0px rgba(16, 185, 129, 0.4),
+      0 0 0 10px rgba(16, 185, 129, 0.1),
+      0 0 0 20px rgba(16, 185, 129, 0.05);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 0px rgba(16, 185, 129, 0),
+      0 0 0 30px rgba(16, 185, 129, 0),
+      0 0 0 40px rgba(16, 185, 129, 0);
+  }
+}
+
+/* Effet pour nouvelle valeur */
+.cellule.nouvelle-valeur {
+  animation: nouvelleValeur 0.4s ease-out;
+}
+
+@keyframes nouvelleValeur {
+  0% {
+    transform: scale(1.1);
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    background-color: initial;
+  }
+}
+
+/* =============================================
+   SUPPORT ÉCRANS HAUTE DENSITÉ
+   ============================================= */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .cellule {
+    border-width: 0.5px;
+  }
+  
+  .celluleSelectionnee {
+    border-width: 1.5px;
+  }
+  
+  .celluleInvalide {
+    border-width: 1px;
+  }
+}
+
+/* =============================================
+   VARIABLES CSS POUR CELLULES
+   ============================================= */
+
+.cellule {
+  /* Variables pour personnalisation */
+  --cellule-padding: 0;
+  --cellule-border-radius: 4px;
+  --cellule-font-weight: 600;
+  --cellule-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Application des variables */
+.cellule {
+  padding: var(--cellule-padding);
+  border-radius: var(--cellule-border-radius);
+  font-weight: var(--cellule-font-weight);
+  transition: var(--cellule-transition);
+}
+
+/* =============================================
+   PRINT STYLES (pour impression)
+   ============================================= */
+
+@media print {
+  .cellule {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-weight: bold !important;
+  }
+  
+  .celluleInitiale {
+    background: #f0f0f0 !important;
+    font-weight: 900 !important;
+  }
+  
+  .celluleSelectionnee,
+  .celluleSurlignee,
+  .celluleInvalide {
+    background: white !important;
+    border: 2px solid black !important;
   }
 }

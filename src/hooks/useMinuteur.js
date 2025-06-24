@@ -1,12 +1,12 @@
 // =============================================
-// HOOK MINUTEUR OPTIMISÉ
+// HOOK MINUTEUR OPTIMISÉ AVEC AUTO-RÉINITIALISATION
 // =============================================
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { STATUTS_JEU } from '../utilitaires/constantes.js';
 
 /**
- * Hook pour gérer le minuteur du jeu
+ * Hook pour gérer le minuteur du jeu avec réinitialisation automatique
  * @param {string} statutJeu - Statut actuel du jeu
  * @param {number} heureDebut - Timestamp de début de partie
  * @returns {Object} État et fonctions du minuteur
@@ -17,6 +17,7 @@ const useMinuteur = (statutJeu, heureDebut) => {
   const [tempsPause, setTempsPause] = useState(0);
   const intervalRef = useRef(null);
   const heureDebutPauseRef = useRef(null);
+  const heureDebutPrecedenteRef = useRef(heureDebut);
 
   // Calculer le temps écoulé
   const calculerTempsEcoule = useCallback(() => {
@@ -28,13 +29,36 @@ const useMinuteur = (statutJeu, heureDebut) => {
     return Math.max(0, Math.floor(tempsTotal / 1000));
   }, [heureDebut, tempsPause]);
 
+  // Réinitialiser automatiquement quand une nouvelle partie commence
+  useEffect(() => {
+    // Si heureDebut change (nouvelle partie), réinitialiser
+    if (heureDebut && heureDebut !== heureDebutPrecedenteRef.current) {
+      setTempsEcoule(0);
+      setEstEnPause(false);
+      setTempsPause(0);
+      heureDebutPauseRef.current = null;
+      
+      // Arrêter l'ancien intervalle
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      
+      // Mettre à jour la référence
+      heureDebutPrecedenteRef.current = heureDebut;
+    }
+  }, [heureDebut]);
+
   // Démarrer/arrêter le minuteur
   useEffect(() => {
-    if (statutJeu === STATUTS_JEU.EN_COURS && !estEnPause) {
+    if (statutJeu === STATUTS_JEU.EN_COURS && !estEnPause && heureDebut) {
       // Démarrer le minuteur
       intervalRef.current = setInterval(() => {
         setTempsEcoule(calculerTempsEcoule());
       }, 1000);
+      
+      // Mise à jour immédiate
+      setTempsEcoule(calculerTempsEcoule());
     } else {
       // Arrêter le minuteur
       if (intervalRef.current) {
@@ -47,9 +71,25 @@ const useMinuteur = (statutJeu, heureDebut) => {
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [statutJeu, estEnPause, calculerTempsEcoule]);
+  }, [statutJeu, estEnPause, heureDebut, calculerTempsEcoule]);
+
+  // Réinitialiser quand le jeu est en attente ou terminé
+  useEffect(() => {
+    if (statutJeu === STATUTS_JEU.EN_ATTENTE || statutJeu === STATUTS_JEU.NOUVEAU) {
+      setTempsEcoule(0);
+      setEstEnPause(false);
+      setTempsPause(0);
+      heureDebutPauseRef.current = null;
+      
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+  }, [statutJeu]);
 
   // Mettre en pause
   const mettreEnPause = useCallback(() => {
@@ -69,12 +109,13 @@ const useMinuteur = (statutJeu, heureDebut) => {
     heureDebutPauseRef.current = null;
   }, [estEnPause]);
 
-  // Réinitialiser le minuteur
+  // Réinitialiser manuellement le minuteur
   const reinitialiserMinuteur = useCallback(() => {
     setTempsEcoule(0);
     setEstEnPause(false);
     setTempsPause(0);
     heureDebutPauseRef.current = null;
+    heureDebutPrecedenteRef.current = null;
     
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -105,14 +146,51 @@ const useMinuteur = (statutJeu, heureDebut) => {
     };
   }, [formaterTemps, tempsEcoule]);
 
+  // Basculer pause/reprendre
+  const basculerPause = useCallback(() => {
+    if (estEnPause) {
+      reprendre();
+    } else {
+      mettreEnPause();
+    }
+  }, [estEnPause, reprendre, mettreEnPause]);
+
+  // Vérifier si le minuteur est actif
+  const estActif = useCallback(() => {
+    return statutJeu === STATUTS_JEU.EN_COURS && !estEnPause && !!heureDebut;
+  }, [statutJeu, estEnPause, heureDebut]);
+
+  // Obtenir des statistiques de temps
+  const obtenirStatistiques = useCallback(() => {
+    const totalSecondes = tempsEcoule;
+    const totalMinutes = Math.floor(totalSecondes / 60);
+    const totalHeures = Math.floor(totalMinutes / 60);
+    
+    return {
+      secondes: totalSecondes,
+      minutes: totalMinutes,
+      heures: totalHeures,
+      affichageCompact: totalMinutes < 60 ? `${totalMinutes}m` : `${totalHeures}h ${totalMinutes % 60}m`,
+      affichageDetaille: formaterTemps(totalSecondes)
+    };
+  }, [tempsEcoule, formaterTemps]);
+
   return {
+    // États
     tempsEcoule,
     estEnPause,
-    formaterTemps,
-    obtenirTempsFormate,
+    estActif: estActif(),
+    
+    // Fonctions de contrôle
     mettreEnPause,
     reprendre,
-    reinitialiserMinuteur
+    basculerPause,
+    reinitialiserMinuteur,
+    
+    // Fonctions d'affichage
+    formaterTemps,
+    obtenirTempsFormate,
+    obtenirStatistiques
   };
 };
 

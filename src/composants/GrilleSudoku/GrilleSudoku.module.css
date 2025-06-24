@@ -1,92 +1,147 @@
 /* =============================================
-   GRILLE SUDOKU RESPONSIVE AVEC CSS GRID
+   GRILLE SUDOKU RESPONSIVE ULTRA-OPTIMISÉE
    ============================================= */
 
 .grilleSudoku {
-  /* Layout moderne avec CSS Grid */
+  /* Grille CSS moderne avec délimitation claire */
   display: grid;
   grid-template-columns: repeat(9, var(--taille-cellule-desktop));
   grid-template-rows: repeat(9, var(--taille-cellule-desktop));
-  gap: var(--espacement-grille);
+  gap: 1px;
   
-  /* Style visuel */
-  border: var(--bordure-grille) solid #333;
-  background-color: #333;
+  /* Bordure principale très visible */
+  border: 4px solid #2c3e50;
+  background-color: #2c3e50;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: var(--espacement-grille);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+  padding: 4px;
   
-  /* Animation d'entrée */
-  animation: apparitionEchelle 0.6s ease-out;
+  /* Animation d'entrée fluide */
+  animation: apparitionGrille 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   
-  /* Centrage */
+  /* Centrage et dimensions */
   margin: 0 auto;
-  
-  /* Conteneur responsive */
   width: fit-content;
   max-width: 100%;
+  position: relative;
 }
 
 /* Suppression de l'ancien système de lignes */
 .ligneGrille {
-  display: contents; /* Les enfants remontent au conteneur grid parent */
+  display: contents;
 }
 
-/* Séparateurs visuels des sections 3x3 */
+/* =============================================
+   SÉPARATEURS 3x3 ULTRA-VISIBLES
+   ============================================= */
+
+/* Séparateurs verticaux majeurs */
+.grilleSudoku::before,
+.grilleSudoku::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background-color: #2c3e50;
+  z-index: 10;
+  border-radius: 2px;
+}
+
+.grilleSudoku::before {
+  left: calc(3 * var(--taille-cellule-desktop) + 7px);
+}
+
+.grilleSudoku::after {
+  left: calc(6 * var(--taille-cellule-desktop) + 14px);
+}
+
+/* Séparateurs horizontaux via pseudo-éléments additionnels */
+.grilleSudoku {
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent calc(3 * var(--taille-cellule-desktop) + 7px),
+      #2c3e50 calc(3 * var(--taille-cellule-desktop) + 7px),
+      #2c3e50 calc(3 * var(--taille-cellule-desktop) + 11px),
+      transparent calc(3 * var(--taille-cellule-desktop) + 11px),
+      transparent calc(6 * var(--taille-cellule-desktop) + 14px),
+      #2c3e50 calc(6 * var(--taille-cellule-desktop) + 14px),
+      #2c3e50 calc(6 * var(--taille-cellule-desktop) + 18px),
+      transparent calc(6 * var(--taille-cellule-desktop) + 18px)
+    );
+}
+
+/* Bordures cellules individuelles pour sections */
 .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-  border-right: var(--espacement-section) solid #333;
+  border-right: 3px solid #2c3e50;
+  margin-right: 1px;
 }
 
 .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
 .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-  border-bottom: var(--espacement-section) solid #333;
+  border-bottom: 3px solid #2c3e50;
+  margin-bottom: 1px;
 }
 
 /* Animation d'apparition */
-@keyframes apparitionEchelle {
+@keyframes apparitionGrille {
   from {
     opacity: 0;
-    transform: scale(0.9) rotateX(10deg);
+    transform: scale(0.9) rotateX(15deg);
+    filter: blur(4px);
   }
   to {
     opacity: 1;
     transform: scale(1) rotateX(0deg);
+    filter: blur(0px);
   }
 }
 
 /* =============================================
-   SYSTÈME DE GRILLE RESPONSIVE
+   RESPONSIVE TABLETTE (768px et moins)
    ============================================= */
 
-/* Tablette */
 @media (max-width: 768px) {
   .grilleSudoku {
     grid-template-columns: repeat(9, var(--taille-cellule-tablette));
     grid-template-rows: repeat(9, var(--taille-cellule-tablette));
     border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-}
-
-/* Mobile - Grille fluide */
-@media (max-width: 480px) {
-  .grilleSudoku {
-    /* Grille responsive qui s'adapte à l'écran */
-    width: min(90vw, 350px);
-    height: min(90vw, 350px);
-    aspect-ratio: 1;
-    
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(9, 1fr);
-    
-    border-radius: 8px;
-    border-width: 2px;
-    gap: 1px;
-    padding: 1px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-width: 3px;
+    padding: 3px;
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
   
-  /* Séparateurs réduits sur mobile */
+  /* Ajustement séparateurs pour tablette */
+  .grilleSudoku::before {
+    left: calc(3 * var(--taille-cellule-tablette) + 6px);
+    width: 3px;
+  }
+  
+  .grilleSudoku::after {
+    left: calc(6 * var(--taille-cellule-tablette) + 12px);
+    width: 3px;
+  }
+  
+  .grilleSudoku {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent calc(3 * var(--taille-cellule-tablette) + 6px),
+        #2c3e50 calc(3 * var(--taille-cellule-tablette) + 6px),
+        #2c3e50 calc(3 * var(--taille-cellule-tablette) + 9px),
+        transparent calc(3 * var(--taille-cellule-tablette) + 9px),
+        transparent calc(6 * var(--taille-cellule-tablette) + 12px),
+        #2c3e50 calc(6 * var(--taille-cellule-tablette) + 12px),
+        #2c3e50 calc(6 * var(--taille-cellule-tablette) + 15px),
+        transparent calc(6 * var(--taille-cellule-tablette) + 15px)
+      );
+  }
+  
   .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
     border-right-width: 2px;
   }
@@ -97,12 +152,94 @@
   }
 }
 
-/* Très petit mobile */
+/* =============================================
+   RESPONSIVE MOBILE (480px et moins)
+   ============================================= */
+
+@media (max-width: 480px) {
+  .grilleSudoku {
+    /* Grille responsive qui s'adapte parfaitement */
+    grid-template-columns: repeat(9, var(--taille-cellule-mobile));
+    grid-template-rows: repeat(9, var(--taille-cellule-mobile));
+    
+    /* Dimensions fluides */
+    width: calc(9 * var(--taille-cellule-mobile) + 20px);
+    height: calc(9 * var(--taille-cellule-mobile) + 20px);
+    aspect-ratio: 1;
+    
+    border-radius: 8px;
+    border-width: 3px;
+    gap: 1px;
+    padding: 2px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Séparateurs adaptés au mobile */
+  .grilleSudoku::before {
+    left: calc(3 * var(--taille-cellule-mobile) + 5px);
+    width: 3px;
+  }
+  
+  .grilleSudoku::after {
+    left: calc(6 * var(--taille-cellule-mobile) + 8px);
+    width: 3px;
+  }
+  
+  .grilleSudoku {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent calc(3 * var(--taille-cellule-mobile) + 5px),
+        #2c3e50 calc(3 * var(--taille-cellule-mobile) + 5px),
+        #2c3e50 calc(3 * var(--taille-cellule-mobile) + 8px),
+        transparent calc(3 * var(--taille-cellule-mobile) + 8px),
+        transparent calc(6 * var(--taille-cellule-mobile) + 8px),
+        #2c3e50 calc(6 * var(--taille-cellule-mobile) + 8px),
+        #2c3e50 calc(6 * var(--taille-cellule-mobile) + 11px),
+        transparent calc(6 * var(--taille-cellule-mobile) + 11px)
+      );
+  }
+  
+  /* Bordures réduites mais visibles sur mobile */
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-width: 2px;
+    margin-right: 0.5px;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-width: 2px;
+    margin-bottom: 0.5px;
+  }
+}
+
+/* Très petit mobile (360px et moins) */
 @media (max-width: 360px) {
   .grilleSudoku {
-    width: min(95vw, 320px);
-    height: min(95vw, 320px);
+    width: calc(9 * var(--taille-cellule-mobile) + 16px);
+    height: calc(9 * var(--taille-cellule-mobile) + 16px);
     border-radius: 6px;
+    border-width: 2px;
+    padding: 1px;
+  }
+  
+  .grilleSudoku::before {
+    left: calc(3 * var(--taille-cellule-mobile) + 4px);
+    width: 2px;
+  }
+  
+  .grilleSudoku::after {
+    left: calc(6 * var(--taille-cellule-mobile) + 7px);
+    width: 2px;
+  }
+  
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-width: 1px;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-width: 1px;
   }
 }
 
@@ -113,42 +250,212 @@
 /* Grille en cours de résolution */
 .grilleSudoku[data-solving="true"] {
   pointer-events: none;
-  opacity: 0.8;
-  filter: saturate(0.7);
+  opacity: 0.7;
+  filter: saturate(0.6) blur(1px);
+  transition: all 0.3s ease;
 }
 
-/* Grille terminée */
+/* Grille terminée avec célébration */
 .grilleSudoku[data-completed="true"] {
-  animation: celebration 1s ease-in-out;
-  box-shadow: 0 0 30px rgba(40, 167, 69, 0.5);
+  animation: celebration 1.2s ease-in-out;
+  box-shadow: 
+    0 0 40px rgba(40, 167, 69, 0.6),
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 3px rgba(40, 167, 69, 0.3);
+  border-color: #28a745;
 }
 
 @keyframes celebration {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+  }
+  25% { 
+    transform: scale(1.03) rotate(1deg); 
+  }
+  50% { 
+    transform: scale(1.05) rotate(0deg); 
+  }
+  75% { 
+    transform: scale(1.03) rotate(-1deg); 
+  }
+}
+
+/* Effet de pulsation pour indication */
+.grilleSudoku[data-hint="true"] {
+  animation: pulsation 0.8s ease-in-out 2;
+}
+
+@keyframes pulsation {
+  0%, 100% { 
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.25),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 15px 40px rgba(0, 123, 255, 0.4),
+      inset 0 0 0 3px rgba(0, 123, 255, 0.3);
+  }
+}
+
+/* Grille en pause */
+.grilleSudoku[data-paused="true"] {
+  filter: blur(8px) grayscale(50%);
+  pointer-events: none;
+  transition: filter 0.3s ease;
+}
+
+/* Grille avec erreurs */
+.grilleSudoku[data-errors="true"] {
+  animation: secousseGrille 0.5s ease-in-out;
+}
+
+@keyframes secousseGrille {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
 }
 
 /* =============================================
-   MODE PAYSAGE MOBILE
+   MODE PAYSAGE MOBILE OPTIMISÉ
    ============================================= */
 
 @media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
   .grilleSudoku {
-    width: min(50vh, 300px);
-    height: min(50vh, 300px);
+    /* Adaptation pour mode paysage */
+    grid-template-columns: repeat(9, var(--taille-cellule-mobile));
+    grid-template-rows: repeat(9, var(--taille-cellule-mobile));
+    
+    width: calc(9 * var(--taille-cellule-mobile) + 20px);
+    height: calc(9 * var(--taille-cellule-mobile) + 20px);
+  }
+  
+  .grilleSudoku::before {
+    left: calc(3 * var(--taille-cellule-mobile) + 5px);
+  }
+  
+  .grilleSudoku::after {
+    left: calc(6 * var(--taille-cellule-mobile) + 8px);
   }
 }
 
 /* =============================================
-   ACCESSIBILITÉ
+   THÈME SOMBRE OPTIMISÉ POUR GRILLE
    ============================================= */
 
-/* Mode contraste élevé */
+@media (prefers-color-scheme: dark) {
+  .grilleSudoku {
+    border-color: #374151;
+    background-color: #374151;
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 2px rgba(156, 163, 175, 0.1);
+  }
+  
+  /* Séparateurs thème sombre */
+  .grilleSudoku::before,
+  .grilleSudoku::after {
+    background-color: #374151;
+  }
+  
+  /* Gradients adaptés au thème sombre pour desktop */
+  .grilleSudoku {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent calc(3 * var(--taille-cellule-desktop) + 7px),
+        #374151 calc(3 * var(--taille-cellule-desktop) + 7px),
+        #374151 calc(3 * var(--taille-cellule-desktop) + 11px),
+        transparent calc(3 * var(--taille-cellule-desktop) + 11px),
+        transparent calc(6 * var(--taille-cellule-desktop) + 14px),
+        #374151 calc(6 * var(--taille-cellule-desktop) + 14px),
+        #374151 calc(6 * var(--taille-cellule-desktop) + 18px),
+        transparent calc(6 * var(--taille-cellule-desktop) + 18px)
+      );
+  }
+  
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-color: #374151;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: #374151;
+  }
+  
+  /* États spéciaux en thème sombre */
+  .grilleSudoku[data-completed="true"] {
+    border-color: #059669;
+    box-shadow: 
+      0 0 40px rgba(16, 185, 129, 0.5),
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 3px rgba(16, 185, 129, 0.3);
+  }
+  
+  /* Tablette thème sombre */
+  @media (max-width: 768px) {
+    .grilleSudoku {
+      background-image:
+        linear-gradient(
+          to bottom,
+          transparent calc(3 * var(--taille-cellule-tablette) + 6px),
+          #374151 calc(3 * var(--taille-cellule-tablette) + 6px),
+          #374151 calc(3 * var(--taille-cellule-tablette) + 9px),
+          transparent calc(3 * var(--taille-cellule-tablette) + 9px),
+          transparent calc(6 * var(--taille-cellule-tablette) + 12px),
+          #374151 calc(6 * var(--taille-cellule-tablette) + 12px),
+          #374151 calc(6 * var(--taille-cellule-tablette) + 15px),
+          transparent calc(6 * var(--taille-cellule-tablette) + 15px)
+        );
+    }
+  }
+  
+  /* Mobile thème sombre */
+  @media (max-width: 480px) {
+    .grilleSudoku {
+      background-image:
+        linear-gradient(
+          to bottom,
+          transparent calc(3 * var(--taille-cellule-mobile) + 5px),
+          #374151 calc(3 * var(--taille-cellule-mobile) + 5px),
+          #374151 calc(3 * var(--taille-cellule-mobile) + 8px),
+          transparent calc(3 * var(--taille-cellule-mobile) + 8px),
+          transparent calc(6 * var(--taille-cellule-mobile) + 8px),
+          #374151 calc(6 * var(--taille-cellule-mobile) + 8px),
+          #374151 calc(6 * var(--taille-cellule-mobile) + 11px),
+          transparent calc(6 * var(--taille-cellule-mobile) + 11px)
+        );
+    }
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ ET PRÉFÉRENCES
+   ============================================= */
+
+/* Contraste élevé */
 @media (prefers-contrast: high) {
   .grilleSudoku {
-    border-width: 4px;
+    border-width: 6px;
     border-color: #000;
     background-color: #000;
+  }
+  
+  .grilleSudoku::before,
+  .grilleSudoku::after {
+    background-color: #000;
+    width: 6px;
+  }
+  
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-width: 4px;
+    border-right-color: #000;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-width: 4px;
+    border-bottom-color: #000;
   }
 }
 
@@ -161,23 +468,21 @@
   .grilleSudoku[data-completed="true"] {
     animation: none;
   }
-}
-
-/* Mode sombre */
-@media (prefers-color-scheme: dark) {
-  .grilleSudoku {
-    border-color: #4a5568;
-    background-color: #4a5568;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  
+  .grilleSudoku[data-hint="true"] {
+    animation: none;
   }
   
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-color: #4a5568;
+  .grilleSudoku[data-solving="true"] {
+    transition: none;
   }
   
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-color: #4a5568;
+  .grilleSudoku[data-errors="true"] {
+    animation: none;
+  }
+  
+  .grilleSudoku[data-paused="true"] {
+    transition: none;
   }
 }
 
@@ -186,20 +491,134 @@
    ============================================= */
 
 .grilleSudoku {
-  /* Optimisations GPU */
+  /* Optimisations GPU pour animations fluides */
   will-change: transform;
   transform: translateZ(0);
   
   /* Isolation pour éviter les repaints */
   isolation: isolate;
+  
+  /* Optimisation du rendu */
+  contain: layout style paint;
 }
 
-/* Conteneur pour le verrouillage du défilement mobile */
+/* Conteneur pour interactions tactiles optimisées */
 .conteneur-grille {
   position: relative;
   overflow: hidden;
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: fit-content;
 }
 
 .conteneur-grille.mobile-actif {
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Support pour les écrans haute densité */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .grilleSudoku {
+    border-width: 3px;
+  }
+  
+  .grilleSudoku::before,
+  .grilleSudoku::after {
+    width: 3px;
+  }
+}
+
+/* =============================================
+   ÉTATS DE FOCUS POUR NAVIGATION CLAVIER
+   ============================================= */
+
+.grilleSudoku:focus-within {
+  outline: 3px solid rgba(0, 123, 255, 0.5);
+  outline-offset: 4px;
+}
+
+/* Indicateur de mode de saisie */
+.grilleSudoku[data-input-mode="keyboard"] {
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.grilleSudoku[data-input-mode="touch"] {
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+/* =============================================
+   MODES DE DIFFICULTÉ VISUELS
+   ============================================= */
+
+.grilleSudoku[data-difficulty="facile"] {
+  border-color: #28a745;
+}
+
+.grilleSudoku[data-difficulty="moyen"] {
+  border-color: #ffc107;
+}
+
+.grilleSudoku[data-difficulty="difficile"] {
+  border-color: #dc3545;
+}
+
+.grilleSudoku[data-difficulty="expert"] {
+  border-color: #6f42c1;
+}
+
+/* =============================================
+   GRILLE ADAPTIVE POUR CONTENU DYNAMIQUE
+   ============================================= */
+
+.grilleSudoku.adaptive {
+  min-width: 300px;
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.grilleSudoku.adaptive > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* =============================================
+   STYLES POUR IMPRESSION
+   ============================================= */
+
+@media print {
+  .grilleSudoku {
+    border: 4px solid #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transform: none !important;
+    page-break-inside: avoid;
+    width: 90% !important;
+    height: auto !important;
+  }
+  
+  .grilleSudoku::before,
+  .grilleSudoku::after {
+    background-color: #000 !important;
+  }
+  
+  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+    border-right-color: #000 !important;
+  }
+  
+  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: #000 !important;
+  }
 }

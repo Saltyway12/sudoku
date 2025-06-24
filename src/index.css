@@ -1,68 +1,614 @@
+/* =============================================
+   CONFIGURATION DE BASE OPTIMISÉE
+   ============================================= */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Polices système optimisées */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+               'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 
+               'Helvetica Neue', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
+  /* Schéma de couleurs adaptatif */
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  
+  /* Thème clair par défaut */
+  color: #1f2937;
+  background-color: #ffffff;
 
+  /* Optimisations de rendu */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Variables pour transitions fluides */
+  --transition-rapide: 0.15s ease;
+  --transition-normale: 0.25s ease;
+  --transition-lente: 0.4s ease;
+  
+  /* Variables pour responsive */
+  --container-padding: 2rem;
+  --container-max-width: 1280px;
 }
+
+/* =============================================
+   STYLES DE LIENS AMÉLIORÉS
+   ============================================= */
 
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: var(--transition-rapide);
+  position: relative;
 }
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width var(--transition-rapide);
+}
+
 a:hover {
-  color: #535bf2;
+  color: #1d4ed8;
 }
+
+a:hover::after {
+  width: 100%;
+}
+
+a:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* =============================================
+   STYLES BODY OPTIMISÉS
+   ============================================= */
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: inherit;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Optimisations mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  
+  /* Scroll fluide */
+  scroll-behavior: smooth;
+  
+  /* Prévention débordement horizontal */
+  overflow-x: hidden;
 }
+
+/* =============================================
+   STYLES TYPOGRAPHIQUES
+   ============================================= */
 
 h1 {
-  font-size: 3.2em;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   line-height: 1.1;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: inherit;
+  letter-spacing: -0.02em;
 }
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  line-height: 1.3;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+/* =============================================
+   BOUTONS AMÉLIORÉS
+   ============================================= */
 
 button {
+  /* Base styling */
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #3b82f6;
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: var(--transition-normale);
+  
+  /* Accessibilité tactile */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Optimisations */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  /* Affichage */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  /* Effets visuels */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-@media (prefers-color-scheme: light) {
+/* Effet de brillance au survol */
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background-color: #9ca3af;
+}
+
+button:disabled::before {
+  display: none;
+}
+
+/* =============================================
+   VARIANTES DE BOUTONS
+   ============================================= */
+
+button.secondaire {
+  background-color: #6b7280;
+  color: white;
+}
+
+button.secondaire:hover {
+  background-color: #4b5563;
+}
+
+button.outline {
+  background-color: transparent;
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+button.outline:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+button.danger {
+  background-color: #ef4444;
+}
+
+button.danger:hover {
+  background-color: #dc2626;
+}
+
+button.succes {
+  background-color: #10b981;
+}
+
+button.succes:hover {
+  background-color: #059669;
+}
+
+/* =============================================
+   CONTENEUR PRINCIPAL
+   ============================================= */
+
+#root {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================
+   ÉLÉMENTS INTERACTIFS
+   ============================================= */
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms ease;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Animation du logo */
+@keyframes rotation-logo {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: rotation-logo infinite 20s linear;
+  }
+}
+
+/* =============================================
+   CARTES ET CONTENEURS
+   ============================================= */
+
+.card {
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  margin: 1rem 0;
+  transition: var(--transition-normale);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* =============================================
+   UTILITAIRES RESPONSIVE
+   ============================================= */
+
+/* Texte responsive */
+.texte-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+}
+
+/* Espacement responsive */
+.espacement-sm { margin: 0.5rem; }
+.espacement-md { margin: 1rem; }
+.espacement-lg { margin: 2rem; }
+.espacement-xl { margin: 3rem; }
+
+/* =============================================
+   RESPONSIVE DESIGN
+   ============================================= */
+
+/* Tablette */
+@media (max-width: 768px) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --container-padding: 1.5rem;
   }
-  a:hover {
-    color: #747bff;
+  
+  #root {
+    padding: var(--container-padding);
   }
+  
   button {
-    background-color: #f9f9f9;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
   }
+  
+  .card {
+    padding: 1.5em;
+    margin: 0.75rem 0;
+  }
+  
+  .logo {
+    height: 5em;
+    padding: 1em;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 1rem;
+  }
+  
+  body {
+    min-width: 300px;
+  }
+  
+  #root {
+    padding: var(--container-padding);
+    text-align: center;
+  }
+  
+  button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .card {
+    padding: 1.25em;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+  }
+  
+  .logo {
+    height: 4em;
+    padding: 0.75em;
+  }
+  
+  /* Optimisations tactiles */
+  button:hover {
+    transform: none;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 360px) {
+  :root {
+    --container-padding: 0.75rem;
+  }
+  
+  .card {
+    padding: 1em;
+    border-radius: 6px;
+  }
+  
+  button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* =============================================
+   THÈME SOMBRE OPTIMISÉ
+   ============================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f9fafb;
+    background-color: #0f172a;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #1e1b4b 0%, #581c87 100%);
+    color: #f9fafb;
+  }
+  
+  a {
+    color: #60a5fa;
+  }
+  
+  a:hover {
+    color: #93c5fd;
+  }
+  
+  button {
+    background-color: #1e40af;
+  }
+  
+  button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  button.secondaire {
+    background-color: #4b5563;
+  }
+  
+  button.secondaire:hover {
+    background-color: #6b7280;
+  }
+  
+  button.outline {
+    border-color: #60a5fa;
+    color: #60a5fa;
+  }
+  
+  button.outline:hover {
+    background-color: #60a5fa;
+    color: #0f172a;
+  }
+  
+  .card {
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 
+      0 10px 25px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(148, 163, 184, 0.1);
+  }
+  
+  .card:hover {
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(148, 163, 184, 0.2);
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ
+   ============================================= */
+
+/* Mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .logo {
+    animation: none !important;
+  }
+  
+  button::before {
+    display: none;
+  }
+}
+
+/* Contraste élevé */
+@media (prefers-contrast: high) {
+  button {
+    border: 2px solid currentColor;
+  }
+  
+  .card {
+    border: 1px solid currentColor;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* Focus visible pour navigation clavier */
+@media (prefers-reduced-motion: no-preference) {
+  :focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+/* =============================================
+   UTILITAIRES GÉNÉRAUX
+   ============================================= */
+
+.texte-centre { text-align: center; }
+.texte-gauche { text-align: left; }
+.texte-droite { text-align: right; }
+
+.cache { display: none; }
+.invisible { visibility: hidden; }
+.visible { visibility: visible; }
+
+.flex { display: flex; }
+.flex-centre { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+.flex-colonne { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+
+.grille { display: grid; }
+.grille-centre { 
+  display: grid; 
+  place-items: center; 
+}
+
+/* Espacements */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-4 { padding: 1rem; }
+.p-8 { padding: 2rem; }
+
+/* =============================================
+   CLASSES D'AIDE À LA LECTURE
+   ============================================= */
+
+.lecture-seule {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.erreur {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.succes {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.avertissement {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.info {
+  color: #3b82f6;
+  font-weight: 500;
 }
