@@ -1,5 +1,5 @@
 // =============================================
-// CONSTANTES SUDOKU AVEC BROUILLON ET INDICES LIMITÉS - VERSION FRANÇAISE COMPLÈTE
+// CONSTANTES SUDOKU SYNCHRONISÉES AVEC LE NOUVEAU CSS
 // =============================================
 
 export const DIFFICULTES = {
@@ -29,20 +29,53 @@ export const TOUCHES_NAVIGATION = {
   ECHAP: 'Escape'
 };
 
+// ✅ CLASSES CSS POUR COMPOSANTS (non-modules)
 export const CLASSES_CSS = {
-  CELLULE_BASE: 'cellule',
-  CELLULE_INITIALE: 'celluleInitiale',
-  CELLULE_SELECTIONNEE: 'celluleSelectionnee',
-  CELLULE_SURLIGNEE: 'celluleSurlignee',
-  CELLULE_INVALIDE: 'celluleInvalide',
-  CELLULE_BROUILLON: 'celluleBrouillon',
-  CELLULE_INDICE: 'celluleIndice',
-  CELLULE_CORRECTE: 'celluleCorrecte',
-  CELLULE_AVERTISSEMENT: 'celluleAvertissement',
-  CELLULE_SAISIE: 'celluleSaisie',
-  GRILLE: 'grilleSudoku',
-  LIGNE_GRILLE: 'ligneGrille',
-  CONTENEUR_GRILLE: 'conteneurGrille'
+  // Classes globales (non CSS modules)
+  CONTENEUR_APP: 'app',
+  ZONE_JEU_PRINCIPALE: 'zone-jeu-principale',
+  CONTENEUR_JEU: 'conteneur-jeu',
+  PANNEAU_CONTROLES: 'panneau-controles-principal',
+  
+  // Classes de boutons globaux
+  BTN_ACTION: 'btn-action',
+  BTN_PRIMAIRE: 'btn-primaire',
+  BTN_SECONDAIRE: 'btn-secondaire',
+  BTN_NOUVEAU: 'btn-nouveau',
+  BTN_PAUSE: 'btn-pause',
+  BTN_INDICE: 'btn-indice',
+  BTN_VERIFIER: 'btn-verifier',
+  BTN_RESET: 'btn-reset',
+  BTN_RESOUDRE: 'btn-resoudre',
+  
+  // Classes d'animation globales
+  VALIDATION_REUSSIE: 'validation-reussie',
+  NOUVELLE_VALEUR: 'nouvelle-valeur',
+  ERREUR_ANIMATION: 'erreur-animation'
+};
+
+// ✅ CLASSES CSS MODULES (pour référence dans les composants)
+export const CSS_MODULES_CLASSES = {
+  // Cellule.module.css
+  CELLULE: {
+    CELLULE: 'cellule',
+    CELLULE_INITIALE: 'celluleInitiale',
+    CELLULE_SELECTIONNEE: 'celluleSelectionnee',
+    CELLULE_SURLIGNEE: 'celluleSurlignee',
+    CELLULE_INVALIDE: 'celluleInvalide',
+    CELLULE_BROUILLON: 'celluleBrouillon',
+    CONTENEUR_BROUILLON: 'conteneurBrouillon',
+    CONTENU_BROUILLON: 'contenuBrouillon',
+    VALEUR_BROUILLON: 'valeurBrouillon'
+  },
+  
+  // GrilleSudoku.module.css
+  GRILLE: {
+    GRILLE_SUDOKU: 'grilleSudoku',
+    GRILLE_MOBILE: 'grilleMobile',
+    GRILLE_TACTILE: 'grilleTactile',
+    GRILLE_MODE_BROUILLON: 'grilleModeBrouillon'
+  }
 };
 
 export const MESSAGES = {
@@ -94,31 +127,37 @@ export const MESSAGES = {
   ERREUR_CHARGEMENT: '❌ Erreur lors du chargement'
 };
 
-// Configuration des limites par difficulté
+// ✅ CONFIGURATION DES LIMITES SYNCHRONISÉE AVEC LE CSS
 export const LIMITES_DIFFICULTE = {
   [DIFFICULTES.FACILE]: {
     casesARetirer: 35,
     maxTentatives: 100,
     maxIndices: 8,
-    couleurTheme: '#28a745',
+    couleurTheme: '#10b981', // ✅ Synchronisé avec CSS
+    couleurBordure: '#10b981',
     nomAffichage: 'Facile',
-    description: 'Idéal pour débuter'
+    description: 'Idéal pour débuter',
+    dataAttribute: 'facile'
   },
   [DIFFICULTES.MOYEN]: {
     casesARetirer: 45,
     maxTentatives: 150,
     maxIndices: 5,
-    couleurTheme: '#ffc107',
+    couleurTheme: '#f59e0b', // ✅ Synchronisé avec CSS
+    couleurBordure: '#f59e0b',
     nomAffichage: 'Moyen',
-    description: 'Un bon défi'
+    description: 'Un bon défi',
+    dataAttribute: 'moyen'
   },
   [DIFFICULTES.DIFFICILE]: {
     casesARetirer: 55,
     maxTentatives: 200,
     maxIndices: 3,
-    couleurTheme: '#dc3545',
+    couleurTheme: '#ef4444', // ✅ Synchronisé avec CSS
+    couleurBordure: '#ef4444',
     nomAffichage: 'Difficile',
-    description: 'Pour les experts'
+    description: 'Pour les experts',
+    dataAttribute: 'difficile'
   }
 };
 
@@ -138,14 +177,20 @@ export const MODES_INTERACTION = {
   MIXTE: 'mixte'
 };
 
-// Configuration du brouillon
+// ✅ CONFIGURATION DU BROUILLON SYNCHRONISÉE
 export const CONFIG_BROUILLON = {
   MAX_VALEURS_PAR_CELLULE: 5,
-  TAILLE_POLICE_RELATIVE: 0.6,
-  ESPACEMENT_GRILLE: '1fr 1fr 1fr',
-  COULEUR_DEFAUT: '#6b7280',
-  COULEUR_ACTIF: '#3b82f6',
-  ANIMATION_DUREE: 200
+  GRILLE_TEMPLATE: 'repeat(3, 1fr)',
+  CLASSES: {
+    CONTENEUR: 'contenu-brouillon',
+    VALEUR: 'valeur-brouillon',
+    INDICATEUR: 'indicateur-mode-brouillon'
+  },
+  TAILLES_POLICE: {
+    DESKTOP: 'calc(var(--taille-cellule-desktop) * 0.18)',
+    TABLETTE: 'calc(var(--taille-cellule-tablette) * 0.2)',
+    MOBILE: 'calc(var(--taille-cellule-mobile) * 0.22)'
+  }
 };
 
 // Événements personnalisés
@@ -166,7 +211,7 @@ export const STOCKAGE_LOCAL = {
   CLE_STATISTIQUES: 'sudoku_statistiques',
   CLE_PREFERENCES: 'sudoku_preferences',
   CLE_HISTORIQUE: 'sudoku_historique',
-  VERSION_DONNEES: '1.0'
+  VERSION_DONNEES: '2.0' // ✅ Mise à jour pour la nouvelle version
 };
 
 // Raccourcis clavier groupés
@@ -194,42 +239,107 @@ export const RACCOURCIS_CLAVIER = {
   }
 };
 
-// Configuration des animations
+// ✅ CONFIGURATION DES ANIMATIONS SYNCHRONISÉE AVEC CSS
 export const ANIMATIONS = {
-  dureeRapide: 150,
-  dureeNormale: 300,
-  dureeLente: 600,
-  easingDefaut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  easingRebond: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+  durees: {
+    rapide: 150,
+    normale: 250, // ✅ Correspond à --transition-normale
+    lente: 400   // ✅ Correspond à --transition-lente
+  },
+  easings: {
+    defaut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    rebond: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    entree: 'ease-out',
+    sortie: 'ease-in'
+  },
+  classes: {
+    APPARITION_GRILLE: 'apparitionGrille',
+    APPARITION_CELLULE: 'apparitionCellule',
+    SECOUSSE_ERREUR: 'secousseErreur',
+    PULSATION_INDICE: 'pulsationIndice',
+    CELEBRATION: 'celebration',
+    FADE_IN: 'fade-in',
+    SLIDE_IN_RIGHT: 'slide-in-right',
+    BOUNCE_IN: 'bounce-in'
+  }
 };
 
-// Configuration responsive
+// ✅ POINTS DE RUPTURE SYNCHRONISÉS AVEC CSS
 export const POINTS_RUPTURE = {
   mobile: 480,
   tablette: 768,
   desktop: 1024,
-  grandEcran: 1280
+  grandEcran: 1280,
+  
+  // Media queries correspondantes
+  mediaQueries: {
+    mobile: '@media (max-width: 480px)',
+    tablette: '@media (max-width: 768px)',
+    desktop: '@media (min-width: 769px)',
+    grandEcran: '@media (min-width: 1280px)',
+    mobilePortrait: '@media (max-width: 480px) and (orientation: portrait)',
+    mobilePaysage: '@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px)'
+  }
 };
 
-// Couleurs du thème
+// ✅ COULEURS DU THÈME SYNCHRONISÉES AVEC LES VARIABLES CSS
 export const COULEURS_THEME = {
-  primaire: '#3b82f6',
+  // Couleurs principales (correspondent aux variables CSS)
+  primaire: '#3b82f6',      // --couleur-primaire
   secondaire: '#6b7280',
-  succes: '#10b981',
-  avertissement: '#f59e0b',
-  danger: '#ef4444',
-  info: '#06b6d4',
+  succes: '#10b981',        // --couleur-succes
+  avertissement: '#f59e0b', // --couleur-avertissement
+  danger: '#ef4444',        // --couleur-danger
+  info: '#06b6d4',         // --couleur-info
   
   // Couleurs de fond
-  fondClair: '#ffffff',
-  fondSombre: '#1f2937',
+  fondClair: '#ffffff',           // --couleur-cellule
+  fondSombre: '#1f2937',          // --sombre-fond-principal
+  fondGrille: '#2c3e50',          // --couleur-fond-grille
   fondOverlay: 'rgba(0, 0, 0, 0.5)',
   
   // Couleurs de texte
-  texteClairPrimaire: '#111827',
+  texteClairPrimaire: '#1e293b',  // --couleur-texte
   texteClairSecondaire: '#6b7280',
-  texteSombrePrimaire: '#f9fafb',
-  texteSombreSecondaire: '#d1d5db'
+  texteSombrePrimaire: '#f9fafb', // --sombre-texte-principal
+  texteSombreSecondaire: '#9ca3af', // --sombre-texte-secondaire
+  
+  // Couleurs de bordure
+  bordureClaire: '#e2e8f0',       // --couleur-bordure
+  bordureFocus: '#3b82f6',        // --couleur-bordure-focus
+  bordureSombre: '#4b5563',       // --sombre-bordure-claire
+  
+  // Couleurs d'état des cellules
+  cellules: {
+    normale: '#ffffff',           // --couleur-cellule
+    initiale: '#f1f5f9',         // --couleur-cellule-initiale
+    selectionnee: '#dbeafe',      // --couleur-cellule-selectionnee
+    erreur: '#fee2e2',           // --couleur-cellule-erreur
+    succes: '#dcfce7',           // --couleur-cellule-succes
+    surlignee: '#fef3c7',
+    avertissement: '#fffbeb'
+  }
+};
+
+// ✅ TAILLES DE CELLULES SYNCHRONISÉES AVEC CSS
+export const TAILLES_CELLULES = {
+  desktop: 55,    // --taille-cellule-desktop
+  tablette: 45,   // --taille-cellule-tablette
+  mobile: 'min(calc((100vw - 80px) / 9), 38px)', // --taille-cellule-mobile
+  
+  // Formules CSS correspondantes
+  variablesCSS: {
+    desktop: 'var(--taille-cellule-desktop)',
+    tablette: 'var(--taille-cellule-tablette)',
+    mobile: 'var(--taille-cellule-mobile)'
+  },
+  
+  // Calculs de police
+  fontes: {
+    desktop: 'calc(var(--taille-cellule-desktop) * 0.5)',
+    tablette: 'calc(var(--taille-cellule-tablette) * 0.5)',
+    mobile: 'calc(var(--taille-cellule-mobile) * 0.55)'
+  }
 };
 
 // Configuration des sons (pour usage futur)
@@ -322,7 +432,7 @@ export const UTILITAIRES_VALIDATION = {
   }
 };
 
-// Configuration des zones de la grille (sections 3x3)
+// ✅ CONFIGURATION DES ZONES DE LA GRILLE AMÉLIORÉE
 export const ZONES_GRILLE = {
   /**
    * Obtient l'index de la zone 3x3 pour une position donnée
@@ -351,6 +461,29 @@ export const ZONES_GRILLE = {
     }
     
     return positions;
+  },
+
+  /**
+   * Obtient les sélecteurs CSS pour les bordures de section
+   * @returns {Object} Sélecteurs CSS pour les bordures épaisses
+   */
+  obtenirSelecteursBordures: () => {
+    return {
+      borduresVerticales: [
+        '.grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n))',
+        '.grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n))'
+      ],
+      borduresHorizontales: [
+        '.grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27)',
+        '.grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54)'
+      ],
+      coinsSpeciaux: [
+        '.grilleSudoku > .cellule:nth-child(21)',
+        '.grilleSudoku > .cellule:nth-child(24)',
+        '.grilleSudoku > .cellule:nth-child(48)',
+        '.grilleSudoku > .cellule:nth-child(51)'
+      ]
+    };
   }
 };
 
@@ -375,6 +508,58 @@ export const NOTIFICATIONS = {
   }
 };
 
+// ✅ DATA ATTRIBUTES POUR LE CSS
+export const DATA_ATTRIBUTES = {
+  DIFFICULTE: 'data-difficulty',
+  SOLVING: 'data-solving',
+  COMPLETED: 'data-completed',
+  ERRORS: 'data-errors',
+  PAUSED: 'data-paused',
+  HINT: 'data-hint',
+  INPUT_MODE: 'data-input-mode',
+  MODE_BROUILLON: 'data-mode-brouillon'
+};
+
+// ✅ HELPERS POUR L'INTÉGRATION CSS
+export const CSS_HELPERS = {
+  /**
+   * Applique une classe CSS temporairement
+   * @param {HTMLElement} element - L'élément
+   * @param {string} classe - La classe à appliquer
+   * @param {number} duree - Durée en ms
+   */
+  appliquerClasseTemporaire: (element, classe, duree = ANIMATIONS.durees.normale) => {
+    element.classList.add(classe);
+    setTimeout(() => {
+      element.classList.remove(classe);
+    }, duree);
+  },
+
+  /**
+   * Définit un data attribute
+   * @param {HTMLElement} element - L'élément
+   * @param {string} attribut - Le nom de l'attribut
+   * @param {string} valeur - La valeur
+   */
+  definirDataAttribute: (element, attribut, valeur) => {
+    element.setAttribute(attribut, valeur);
+  },
+
+  /**
+   * Obtient les variables CSS comme objet
+   * @returns {Object} Variables CSS
+   */
+  obtenirVariablesCSS: () => {
+    return {
+      '--couleur-primaire': COULEURS_THEME.primaire,
+      '--couleur-succes': COULEURS_THEME.succes,
+      '--couleur-avertissement': COULEURS_THEME.avertissement,
+      '--couleur-danger': COULEURS_THEME.danger,
+      '--couleur-info': COULEURS_THEME.info
+    };
+  }
+};
+
 // Export par défaut avec toutes les constantes
 export default {
   DIFFICULTES,
@@ -392,6 +577,7 @@ export default {
   ANIMATIONS,
   POINTS_RUPTURE,
   COULEURS_THEME,
+  TAILLES_CELLULES,
   SONS,
   STATISTIQUES_DEFAUT,
   VALIDATION,
@@ -399,5 +585,7 @@ export default {
   PERFORMANCE,
   UTILITAIRES_VALIDATION,
   ZONES_GRILLE,
-  NOTIFICATIONS
+  NOTIFICATIONS,
+  DATA_ATTRIBUTES,
+  CSS_HELPERS
 };

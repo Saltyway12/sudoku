@@ -1,681 +1,376 @@
 /* =============================================
-   CELLULE SUDOKU RESPONSIVE ULTRA-OPTIMISÉE
+   CELLULE SUDOKU PARFAITE - DESIGN MODERNE
    ============================================= */
 
 .cellule {
-  /* Taille responsive utilisant les variables CSS */
+  /* Dimensions exactes */
   width: var(--taille-cellule-desktop);
   height: var(--taille-cellule-desktop);
   
-  /* Style de base optimisé */
-  border: 1px solid #d1d5db;
-  text-align: center;
-  font-size: calc(var(--taille-cellule-desktop) * 0.32);
-  font-weight: 600;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #ffffff;
-  outline: none;
-  border-radius: 4px;
-  box-shadow: 
-    inset 0 1px 2px rgba(0, 0, 0, 0.05),
-    0 1px 3px rgba(0, 0, 0, 0.1);
+  /* Style de base modernisé */
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 8px;
   
-  /* Compatibilité tactile améliorée */
-  min-height: 44px;
-  min-width: 44px;
+  /* Typographie optimisée */
+  font-size: calc(var(--taille-cellule-desktop) * 0.5);
+  font-weight: 700;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1e293b;
   
-  /* Optimisations tactiles */
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  
-  /* Désactivation sélection texte */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  
-  /* Affichage contenu centré */
+  /* Centrage du contenu */
   display: flex;
   align-items: center;
   justify-content: center;
   
+  /* Interactions améliorées */
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  touch-action: manipulation;
+  
+  /* Ombres modernes et subtiles */
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  
+  /* Transitions fluides avec courbe personnalisée */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
   /* Optimisations performance */
-  will-change: transform, background-color;
-  contain: layout style paint;
+  will-change: transform, background-color, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  
+  /* Compatibilité tactile améliorée */
+  min-width: 44px;
+  min-height: 44px;
+  
+  /* Micro-interaction preparée */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de brillance subtile */
+.cellule::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
 }
 
 /* =============================================
-   ÉTATS INTERACTIFS DESKTOP
+   ÉTATS INTERACTIFS - MODERNISÉS
    ============================================= */
 
+/* Hover uniquement sur desktop avec effet élégant */
 @media (hover: hover) and (pointer: fine) {
-  .cellule:hover:not(:disabled):not(.celluleInitiale) {
-    background-color: #f8fafc;
-    border-color: #94a3b8;
-    transform: scale(1.02);
+  .cellule:hover:not(.celluleInitiale):not(:disabled) {
+    background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+    border-color: #6366f1;
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 
-      inset 0 1px 2px rgba(0, 0, 0, 0.05),
-      0 4px 12px rgba(0, 0, 0, 0.15);
+      0 4px 12px rgba(99, 102, 241, 0.15),
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  
+  .cellule:hover:not(.celluleInitiale):not(:disabled)::before {
+    left: 100%;
   }
 }
 
+/* Focus pour navigation clavier avec anneau lumineux */
 .cellule:focus {
-  border-color: #3b82f6;
+  border-color: #6366f1;
   box-shadow: 
-    0 0 0 3px rgba(59, 130, 246, 0.3),
-    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    0 0 0 3px rgba(99, 102, 241, 0.2),
+    0 4px 12px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px) scale(1.05);
   z-index: 10;
   position: relative;
-  transform: scale(1.02);
 }
 
 /* =============================================
-   ÉTATS DE CELLULE OPTIMISÉS
+   ÉTATS DES CELLULES - DESIGN PREMIUM
    ============================================= */
 
-/* Cellule initiale (non modifiable) */
+/* Cellule initiale (préremplie) avec style distingué */
 .celluleInitiale {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  color: #1e293b;
-  cursor: not-allowed;
-  font-weight: 700;
+  background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+  color: #475569;
+  font-weight: 800;
+  cursor: default;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #cbd5e1;
+}
+
+.celluleInitiale:hover {
+  background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
   border-color: #cbd5e1;
+  transform: none;
   box-shadow: 
     inset 0 2px 4px rgba(0, 0, 0, 0.1),
     0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.celluleInitiale:hover {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  border-color: #cbd5e1;
-  transform: none;
-}
-
-/* Cellule sélectionnée */
+/* Cellule sélectionnée avec effet spectaculaire */
 .celluleSelectionnee {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  background: linear-gradient(145deg, #dbeafe, #bfdbfe);
   border-color: #3b82f6;
-  box-shadow: 
-    0 0 0 3px rgba(59, 130, 246, 0.3),
-    0 4px 12px rgba(59, 130, 246, 0.2);
-  z-index: 5;
-  position: relative;
-  transform: scale(1.05);
   color: #1e40af;
   font-weight: 700;
+  transform: scale(1.08);
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.3),
+    0 8px 25px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  z-index: 5;
+  position: relative;
 }
 
-/* Cellules de même valeur surlignées */
+/* Effet de pulsation pour la cellule sélectionnée */
+.celluleSelectionnee::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #3b82f6, transparent, #3b82f6);
+  border-radius: 10px;
+  z-index: -1;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.1); }
+}
+
+/* Cellules de même valeur surlignées avec élégance */
 .celluleSurlignee {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  background: linear-gradient(145deg, #fef3c7, #fde68a);
   border-color: #f59e0b;
   color: #92400e;
   font-weight: 600;
   box-shadow: 
-    inset 0 1px 2px rgba(245, 158, 11, 0.1),
-    0 2px 8px rgba(245, 158, 11, 0.2);
+    0 2px 8px rgba(245, 158, 11, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* Cellule avec erreur */
+/* Cellule avec erreur - Design d'alerte moderne */
 .celluleInvalide {
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-  color: #dc2626;
+  background: linear-gradient(145deg, #fee2e2, #fecaca);
   border-color: #ef4444;
+  color: #dc2626;
   font-weight: 700;
-  animation: secousseErreur 0.5s ease-in-out;
+  animation: secousseErreur 0.6s ease-in-out;
   box-shadow: 
     0 0 0 2px rgba(239, 68, 68, 0.3),
-    0 4px 12px rgba(239, 68, 68, 0.2);
-  z-index: 3;
+    0 4px 12px rgba(239, 68, 68, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   position: relative;
 }
 
-/* Cellule désactivée */
+.celluleInvalide::before {
+  content: '⚠';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.6rem;
+  color: #ef4444;
+  opacity: 0.7;
+}
+
+/* Cellule désactivée avec style moderne */
 .celluleDesactivee {
   opacity: 0.4;
   cursor: not-allowed;
-  background-color: #f9fafb;
+  background: linear-gradient(145deg, #f9fafb, #f3f4f6);
   border-color: #e5e7eb;
   color: #9ca3af;
-  filter: grayscale(50%);
+  filter: grayscale(50%) blur(0.5px);
+  transform: scale(0.98);
 }
 
-/* Cellule avec indice */
+/* Cellule avec indice - Design success premium */
 .celluleIndice {
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  background: linear-gradient(145deg, #dcfce7, #bbf7d0);
   border-color: #10b981;
   color: #047857;
   font-weight: 600;
-  animation: pulsationIndice 1s ease-in-out 2;
+  animation: pulsationIndice 1.5s ease-in-out 3;
+  box-shadow: 
+    0 4px 12px rgba(16, 185, 129, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  position: relative;
+}
+
+.celluleIndice::after {
+  content: '💡';
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 0.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
+/* Cellule correcte avec validation visuelle */
+.celluleCorrecte {
+  background: linear-gradient(145deg, #dcfce7, #bbf7d0);
+  border-color: #10b981;
+  color: #047857;
+  position: relative;
+}
+
+.celluleCorrecte::before {
+  content: '✓';
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 0.5rem;
+  color: #10b981;
+  opacity: 0.8;
+}
+
+/* Cellule avec avertissement */
+.celluleAvertissement {
+  background: linear-gradient(145deg, #fffbeb, #fef3c7);
+  border-color: #f59e0b;
+  color: #d97706;
+  box-shadow: 
+    0 2px 8px rgba(245, 158, 11, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* =============================================
-   ANIMATIONS AMÉLIORÉES
+   ANIMATIONS MODERNISÉES
    ============================================= */
 
 @keyframes secousseErreur {
-  0%, 100% { transform: translateX(0) scale(1.05); }
-  20% { transform: translateX(-4px) scale(1.05); }
-  40% { transform: translateX(4px) scale(1.05); }
-  60% { transform: translateX(-2px) scale(1.05); }
-  80% { transform: translateX(2px) scale(1.05); }
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  10% { transform: translateX(-3px) rotate(-1deg); }
+  20% { transform: translateX(3px) rotate(1deg); }
+  30% { transform: translateX(-2px) rotate(-0.5deg); }
+  40% { transform: translateX(2px) rotate(0.5deg); }
+  50% { transform: translateX(-1px) rotate(-0.2deg); }
+  60% { transform: translateX(1px) rotate(0.2deg); }
+  70% { transform: translateX(-0.5px) rotate(0deg); }
+  80% { transform: translateX(0.5px) rotate(0deg); }
+  90% { transform: translateX(0) rotate(0deg); }
 }
 
 @keyframes pulsationIndice {
   0%, 100% { 
     transform: scale(1);
     box-shadow: 
-      inset 0 1px 2px rgba(0, 0, 0, 0.05),
-      0 1px 3px rgba(0, 0, 0, 0.1);
+      0 4px 12px rgba(16, 185, 129, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
   50% { 
-    transform: scale(1.08);
+    transform: scale(1.1);
     box-shadow: 
-      0 0 0 3px rgba(16, 185, 129, 0.3),
-      0 4px 12px rgba(16, 185, 129, 0.2);
+      0 0 0 4px rgba(16, 185, 129, 0.3),
+      0 8px 20px rgba(16, 185, 129, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 }
 
-/* Animation d'apparition */
 @keyframes apparitionCellule {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.8) rotateY(90deg);
+    filter: blur(2px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotateY(0deg);
+    filter: blur(0);
   }
 }
 
 .cellule {
-  animation: apparitionCellule 0.3s ease-out;
+  animation: apparitionCellule 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Message d'erreur pour accessibilité */
-.messageErreur {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-/* =============================================
-   RESPONSIVE TABLETTE (768px et moins)
-   ============================================= */
-
-@media (max-width: 768px) {
-  .cellule {
-    width: var(--taille-cellule-tablette);
-    height: var(--taille-cellule-tablette);
-    font-size: calc(var(--taille-cellule-tablette) * 0.35);
-    border-radius: 3px;
-    font-weight: 600;
+/* Animation de validation réussie moderne */
+@keyframes validationReussie {
+  0% { 
+    transform: scale(1); 
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
   }
-  
-  .celluleSelectionnee {
-    transform: scale(1.04);
-  }
-  
-  .cellule:focus {
-    transform: scale(1.04);
-  }
-}
-
-/* =============================================
-   RESPONSIVE MOBILE (480px et moins)
-   ============================================= */
-
-@media (max-width: 480px) {
-  .cellule {
-    /* Utilisation des variables CSS pour cohérence */
-    width: var(--taille-cellule-mobile);
-    height: var(--taille-cellule-mobile);
-    font-size: calc(var(--taille-cellule-mobile) * 0.4);
-    border-radius: 2px;
-    border-width: 1px;
-    min-height: unset;
-    min-width: unset;
-    font-weight: 700;
-  }
-  
-  /* Retour tactile amélioré pour mobile */
-  .cellule:active:not(.celluleInitiale) {
-    transform: scale(0.95);
-    background-color: rgba(59, 130, 246, 0.1);
-    transition: transform 0.1s ease;
-  }
-  
-  .celluleSelectionnee {
-    transform: scale(1.03);
-    box-shadow: 
-      0 0 0 2px rgba(59, 130, 246, 0.4),
-      0 2px 8px rgba(59, 130, 246, 0.2);
-  }
-  
-  .cellule:focus {
-    transform: scale(1.03);
-    box-shadow: 
-      0 0 0 2px rgba(59, 130, 246, 0.4),
-      0 2px 8px rgba(59, 130, 246, 0.2);
-  }
-  
-  /* Optimisation taille police mobile */
-  .celluleInitiale {
-    font-weight: 800;
-  }
-  
-  .celluleInvalide {
-    font-weight: 800;
-  }
-}
-
-/* Très petit mobile (360px et moins) */
-@media (max-width: 360px) {
-  .cellule {
-    width: var(--taille-cellule-mobile);
-    height: var(--taille-cellule-mobile);
-    font-size: calc(var(--taille-cellule-mobile) * 0.45);
-    font-weight: 800;
-    border-radius: 1px;
-  }
-  
-  .celluleSelectionnee {
-    transform: scale(1.02);
-  }
-}
-
-/* Mode paysage mobile */
-@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
-  .cellule {
-    width: var(--taille-cellule-mobile);
-    height: var(--taille-cellule-mobile);
-    font-size: calc(var(--taille-cellule-mobile) * 0.4);
-  }
-}
-
-/* =============================================
-   THÈME SOMBRE OPTIMISÉ
-   ============================================= */
-
-@media (prefers-color-scheme: dark) {
-  .cellule {
-    background-color: #1f2937;
-    color: #f9fafb;
-    border-color: #4b5563;
-    box-shadow: 
-      inset 0 1px 2px rgba(0, 0, 0, 0.2),
-      0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Cellule initiale thème sombre */
-  .celluleInitiale {
-    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-    color: #d1d5db;
-    border-color: #6b7280;
-  }
-  
-  /* Cellule sélectionnée thème sombre */
-  .celluleSelectionnee {
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-    border-color: #6366f1;
-    color: #e0e7ff;
-    box-shadow: 
-      0 0 0 3px rgba(99, 102, 241, 0.4),
-      0 4px 12px rgba(99, 102, 241, 0.3);
-  }
-  
-  /* Cellule surlignée thème sombre */
-  .celluleSurlignee {
-    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
-    border-color: #d97706;
-    color: #fbbf24;
-  }
-  
-  /* Cellule erreur thème sombre */
-  .celluleInvalide {
-    background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
-    color: #fca5a5;
-    border-color: #ef4444;
-    box-shadow: 
-      0 0 0 2px rgba(239, 68, 68, 0.4),
-      0 4px 12px rgba(239, 68, 68, 0.3);
-  }
-  
-  /* Cellule indice thème sombre */
-  .celluleIndice {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%);
-    border-color: #10b981;
-    color: #a7f3d0;
-  }
-  
-  /* Hover thème sombre */
-  @media (hover: hover) and (pointer: fine) {
-    .cellule:hover:not(:disabled):not(.celluleInitiale) {
-      background-color: #374151;
-      border-color: #9ca3af;
-    }
-  }
-  
-  /* Cellule désactivée thème sombre */
-  .celluleDesactivee {
-    background-color: #111827;
-    border-color: #374151;
-    color: #6b7280;
-  }
-}
-
-/* =============================================
-   ACCESSIBILITÉ ET PRÉFÉRENCES
-   ============================================= */
-
-/* Contraste élevé */
-@media (prefers-contrast: high) {
-  .cellule {
-    border-width: 2px;
-    font-weight: 800;
-  }
-  
-  .celluleSelectionnee {
-    border-width: 4px;
-    box-shadow: 
-      0 0 0 4px rgba(0, 0, 0, 0.8),
-      0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .celluleInvalide {
-    border-width: 3px;
-    box-shadow: 
-      0 0 0 3px rgba(0, 0, 0, 0.8),
-      0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .celluleInitiale {
-    border-width: 2px;
-    border-color: #000;
-  }
-}
-
-/* Mouvement réduit */
-@media (prefers-reduced-motion: reduce) {
-  .cellule {
-    transition: none;
-    animation: none;
-  }
-  
-  .celluleInvalide {
-    animation: none;
-  }
-  
-  .celluleIndice {
-    animation: none;
-  }
-  
-  .cellule:hover {
-    transform: none;
-  }
-  
-  .celluleSelectionnee {
-    transform: none;
-  }
-  
-  .cellule:focus {
-    transform: none;
-  }
-  
-  .cellule:active {
-    transform: none;
-  }
-}
-
-/* =============================================
-   OPTIMISATIONS SPÉCIALES MOBILE
-   ============================================= */
-
-/* Support claviers virtuels mobile */
-@media (max-width: 480px) {
-  .cellule {
-    /* Masquer curseur de saisie */
-    caret-color: transparent;
-  }
-  
-  .cellule:focus {
-    caret-color: transparent;
-  }
-  
-  /* Optimisation rendu sur petits écrans */
-  .cellule {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-}
-
-/* Support tactile amélioré */
-@media (hover: none) and (pointer: coarse) {
-  /* Désactivation effets hover sur tactile */
-  .cellule:hover {
-    background-color: initial;
-    border-color: initial;
-    transform: none;
-    box-shadow: initial;
-  }
-  
-  /* Focus tactile optimisé */
-  .cellule:focus {
-    outline: 3px solid rgba(59, 130, 246, 0.6);
-    outline-offset: 2px;
-  }
-  
-  /* Retour tactile immédiat */
-  .cellule:active:not(.celluleInitiale):not(.celluleDesactivee) {
-    background-color: rgba(59, 130, 246, 0.15);
-    transform: scale(0.98);
-    transition: all 0.1s ease;
-  }
-}
-
-/* =============================================
-   ÉTATS DE VALIDATION EN TEMPS RÉEL
-   ============================================= */
-
-/* Cellule avec valeur correcte */
-.celluleCorrecte {
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-  border-color: #10b981;
-  color: #047857;
-  box-shadow: 
-    inset 0 1px 2px rgba(16, 185, 129, 0.1),
-    0 2px 8px rgba(16, 185, 129, 0.15);
-}
-
-/* Cellule avec conflit potentiel */
-.celluleAvertissement {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-color: #f59e0b;
-  color: #d97706;
-  box-shadow: 
-    inset 0 1px 2px rgba(245, 158, 11, 0.1),
-    0 2px 8px rgba(245, 158, 11, 0.15);
-}
-
-/* Cellule en cours de saisie */
-.celluleSaisie {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border-color: #0ea5e9;
-  color: #0369a1;
-  transform: scale(1.02);
-  box-shadow: 
-    0 0 0 2px rgba(14, 165, 233, 0.3),
-    0 4px 12px rgba(14, 165, 233, 0.2);
-}
-
-/* =============================================
-   MODES DE JEU SPÉCIALISÉS
-   ============================================= */
-
-/* Mode compétition */
-.cellule[data-mode="competition"] {
-  border-width: 1px;
-  transition: all 0.15s ease;
-}
-
-.cellule[data-mode="competition"]:focus {
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-/* Mode apprentissage */
-.cellule[data-mode="learning"] {
-  border-radius: 6px;
-  font-size: calc(var(--taille-cellule-desktop) * 0.28);
-}
-
-.cellule[data-mode="learning"] .aide-visuelle {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  font-size: 8px;
-  color: #6b7280;
-  opacity: 0.7;
-}
-
-/* Mode daltonien */
-.cellule[data-accessibility="colorblind"] {
-  border-width: 2px;
-  font-weight: 700;
-}
-
-.cellule[data-accessibility="colorblind"].celluleSelectionnee {
-  border-style: dashed;
-}
-
-.cellule[data-accessibility="colorblind"].celluleInvalide {
-  border-style: dotted;
-  text-decoration: underline;
-}
-
-/* =============================================
-   MICRO-INTERACTIONS ET FEEDBACK
-   ============================================= */
-
-/* Effet de ripple pour validation */
-.cellule.validation-reussie {
-  animation: rippleValidation 0.6s ease-out;
-}
-
-@keyframes rippleValidation {
-  0% {
-    box-shadow: 
-      inset 0 1px 2px rgba(0, 0, 0, 0.05),
-      0 1px 3px rgba(0, 0, 0, 0.1);
+  25% { 
+    transform: scale(1.15) rotate(5deg);
+    background: linear-gradient(145deg, #dcfce7, #bbf7d0);
+    color: #166534;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
   }
   50% {
-    box-shadow: 
-      0 0 0 0px rgba(16, 185, 129, 0.4),
-      0 0 0 10px rgba(16, 185, 129, 0.1),
-      0 0 0 20px rgba(16, 185, 129, 0.05);
+    transform: scale(1.2) rotate(-3deg);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
   }
-  100% {
-    box-shadow: 
-      0 0 0 0px rgba(16, 185, 129, 0),
-      0 0 0 30px rgba(16, 185, 129, 0),
-      0 0 0 40px rgba(16, 185, 129, 0);
+  75% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% { 
+    transform: scale(1) rotate(0deg);
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
   }
 }
 
-/* Effet pour nouvelle valeur */
-.cellule.nouvelle-valeur {
-  animation: nouvelleValeur 0.4s ease-out;
+.cellule.validation-reussie {
+  animation: validationReussie 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Animation nouvelle valeur avec effet magique */
 @keyframes nouvelleValeur {
   0% {
-    transform: scale(1.1);
-    background-color: rgba(59, 130, 246, 0.2);
+    transform: scale(1.2) rotateY(180deg);
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.3), rgba(59, 130, 246, 0.2));
+    color: #3b82f6;
+    filter: brightness(1.3);
+  }
+  50% {
+    transform: scale(1.1) rotateY(90deg);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
   }
   100% {
-    transform: scale(1);
-    background-color: initial;
+    transform: scale(1) rotateY(0deg);
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    color: #1e293b;
+    filter: brightness(1);
   }
+}
+
+.cellule.nouvelle-valeur {
+  animation: nouvelleValeur 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* =============================================
-   SUPPORT ÉCRANS HAUTE DENSITÉ
-   ============================================= */
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .cellule {
-    border-width: 0.5px;
-  }
-  
-  .celluleSelectionnee {
-    border-width: 1.5px;
-  }
-  
-  .celluleInvalide {
-    border-width: 1px;
-  }
-}
-
-/* =============================================
-   VARIABLES CSS POUR CELLULES
-   ============================================= */
-
-.cellule {
-  /* Variables pour personnalisation */
-  --cellule-padding: 0;
-  --cellule-border-radius: 4px;
-  --cellule-font-weight: 600;
-  --cellule-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Application des variables */
-.cellule {
-  padding: var(--cellule-padding);
-  border-radius: var(--cellule-border-radius);
-  font-weight: var(--cellule-font-weight);
-  transition: var(--cellule-transition);
-}
-
-/* =============================================
-   PRINT STYLES (pour impression)
-   ============================================= */
-
-@media print {
-  .cellule {
-    background: white !important;
-    color: black !important;
-    border: 1px solid black !important;
-    box-shadow: none !important;
-    transform: none !important;
-    font-weight: bold !important;
-  }
-  
-  .celluleInitiale {
-    background: #f0f0f0 !important;
-    font-weight: 900 !important;
-  }
-  
-  .celluleSelectionnee,
-  .celluleSurlignee,
-  .celluleInvalide {
-    background: white !important;
-    border: 2px solid black !important;
-  }
-}
-/* =============================================
-   CELLULE AVEC BROUILLON
+   MODE BROUILLON MODERNISÉ
    ============================================= */
 
 .celluleBrouillon {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
   border-color: #94a3b8;
   position: relative;
-  padding: 2px;
+  padding: 3px;
   font-size: inherit;
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .celluleBrouillon .contenu-brouillon {
@@ -688,25 +383,33 @@
   font-size: calc(var(--taille-cellule-desktop) * 0.18);
   font-weight: 500;
   color: #64748b;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .celluleBrouillon .valeur-brouillon {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
-  min-height: 0;
   font-size: inherit;
   line-height: 1;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
-/* Mode brouillon avec cellule sélectionnée */
+.celluleBrouillon .valeur-brouillon:hover {
+  background: rgba(99, 102, 241, 0.1);
+  transform: scale(1.1);
+  z-index: 1;
+}
+
 .celluleBrouillon.celluleSelectionnee {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  background: linear-gradient(145deg, #dbeafe, #bfdbfe);
   border-color: #3b82f6;
   box-shadow: 
     0 0 0 2px rgba(59, 130, 246, 0.3),
-    0 4px 12px rgba(59, 130, 246, 0.2);
+    0 4px 12px rgba(59, 130, 246, 0.15);
 }
 
 .celluleBrouillon.celluleSelectionnee .contenu-brouillon {
@@ -714,103 +417,168 @@
   font-weight: 600;
 }
 
-/* Cellule en mode brouillon avec erreurs */
-.celluleBrouillon.celluleInvalide {
-  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-  border-color: #f87171;
-}
-
-.celluleBrouillon.celluleInvalide .contenu-brouillon {
-  color: #dc2626;
-}
-
-/* Animation d'ajout/suppression de brouillon */
-.valeur-brouillon {
-  animation: apparitionBrouillon 0.2s ease-out;
-}
-
-@keyframes apparitionBrouillon {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 /* =============================================
-   INDICATEUR MODE BROUILLON
-   ============================================= */
-
-.indicateur-mode-brouillon {
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 8px;
-  height: 8px;
-  background: #3b82f6;
-  border-radius: 50%;
-  border: 2px solid white;
-  opacity: 0.8;
-}
-
-.cellule[data-mode-brouillon="true"] {
-  outline: 2px dashed rgba(59, 130, 246, 0.3);
-  outline-offset: 1px;
-}
-
-/* =============================================
-   RESPONSIVE POUR BROUILLON
+   RESPONSIVE DESIGN OPTIMISÉ
    ============================================= */
 
 /* Tablette */
 @media (max-width: 768px) {
-  .celluleBrouillon .contenu-brouillon {
-    font-size: calc(var(--taille-cellule-tablette) * 0.2);
-    gap: 0.5px;
+  .cellule {
+    width: var(--taille-cellule-tablette);
+    height: var(--taille-cellule-tablette);
+    font-size: calc(var(--taille-cellule-tablette) * 0.5);
+    border-radius: 6px;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
   
-  .indicateur-mode-brouillon {
-    width: 6px;
-    height: 6px;
+  .celluleBrouillon .contenu-brouillon {
+    font-size: calc(var(--taille-cellule-tablette) * 0.2);
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
+  .cellule {
+    width: var(--taille-cellule-mobile);
+    height: var(--taille-cellule-mobile);
+    font-size: calc(var(--taille-cellule-mobile) * 0.55);
+    border-radius: 4px;
+    font-weight: 800;
+    min-width: unset;
+    min-height: unset;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.1),
+      inset 0 0.5px 0 rgba(255, 255, 255, 0.5);
+  }
+  
+  .celluleSelectionnee {
+    transform: scale(1.05);
+  }
+  
+  .cellule:focus {
+    transform: scale(1.05);
+  }
+  
   .celluleBrouillon {
-    padding: 1px;
+    padding: 2px;
   }
   
   .celluleBrouillon .contenu-brouillon {
     font-size: calc(var(--taille-cellule-mobile) * 0.22);
     gap: 0.5px;
   }
-  
-  .indicateur-mode-brouillon {
-    width: 5px;
-    height: 5px;
-    top: -2px;
-    right: -2px;
-  }
 }
 
 /* Très petit mobile */
 @media (max-width: 360px) {
-  .celluleBrouillon .contenu-brouillon {
-    font-size: calc(var(--taille-cellule-mobile) * 0.25);
+  .cellule {
+    font-size: calc(var(--taille-cellule-mobile) * 0.6);
+    font-weight: 900;
+    border-radius: 3px;
+  }
+  
+  .celluleSelectionnee {
+    transform: scale(1.03);
   }
 }
 
 /* =============================================
-   THÈME SOMBRE POUR BROUILLON
+   INTERACTIONS TACTILES OPTIMISÉES
+   ============================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Désactivation des effets hover sur tactile */
+  .cellule:hover {
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-color: rgba(226, 232, 240, 0.8);
+    transform: none;
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Feedback tactile immédiat et satisfaisant */
+  .cellule:active:not(.celluleInitiale):not(.celluleDesactivee) {
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.1), rgba(59, 130, 246, 0.05));
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+    box-shadow: 
+      inset 0 2px 4px rgba(99, 102, 241, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Focus tactile optimisé */
+  .cellule:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 1px;
+    box-shadow: 
+      0 0 0 4px rgba(99, 102, 241, 0.2),
+      0 2px 8px rgba(99, 102, 241, 0.15);
+  }
+}
+
+/* =============================================
+   THÈME SOMBRE PREMIUM
    ============================================= */
 
 @media (prefers-color-scheme: dark) {
+  .cellule {
+    background: linear-gradient(145deg, #374151, #4b5563);
+    color: #f9fafb;
+    border-color: #6b7280;
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(156, 163, 175, 0.1);
+  }
+  
+  .celluleInitiale {
+    background: linear-gradient(145deg, #4b5563, #6b7280);
+    color: #e5e7eb;
+    border-color: #9ca3af;
+  }
+  
+  .celluleSelectionnee {
+    background: linear-gradient(145deg, #1e3a8a, #1d4ed8);
+    color: #e0e7ff;
+    border-color: #3b82f6;
+  }
+  
+  .celluleSurlignee {
+    background: linear-gradient(145deg, #92400e, #b45309);
+    border-color: #d97706;
+    color: #fbbf24;
+  }
+  
+  .celluleInvalide {
+    background: linear-gradient(145deg, #7f1d1d, #991b1b);
+    color: #fca5a5;
+    border-color: #ef4444;
+  }
+  
+  .celluleIndice,
+  .celluleCorrecte {
+    background: linear-gradient(145deg, #14532d, #166534);
+    color: #a7f3d0;
+    border-color: #10b981;
+  }
+  
+  .celluleAvertissement {
+    background: linear-gradient(145deg, #92400e, #b45309);
+    border-color: #f59e0b;
+    color: #fbbf24;
+  }
+  
+  .celluleDesactivee {
+    background: linear-gradient(145deg, #111827, #1f2937);
+    border-color: #374151;
+    color: #6b7280;
+  }
+  
   .celluleBrouillon {
-    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    background: linear-gradient(145deg, #374151, #4b5563);
     border-color: #6b7280;
   }
   
@@ -818,130 +586,179 @@
     color: #9ca3af;
   }
   
-  .celluleBrouillon.celluleSelectionnee {
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-    border-color: #6366f1;
-  }
-  
   .celluleBrouillon.celluleSelectionnee .contenu-brouillon {
     color: #c7d2fe;
-  }
-  
-  .celluleBrouillon.celluleInvalide {
-    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
-    border-color: #ef4444;
-  }
-  
-  .celluleBrouillon.celluleInvalide .contenu-brouillon {
-    color: #fca5a5;
-  }
-  
-  .indicateur-mode-brouillon {
-    background: #60a5fa;
-    border-color: #1f2937;
   }
 }
 
 /* =============================================
-   ACCESSIBILITÉ BROUILLON
+   ACCESSIBILITÉ RENFORCÉE
    ============================================= */
 
 @media (prefers-contrast: high) {
-  .celluleBrouillon {
-    border-width: 3px;
+  .cellule {
+    border-width: 2px;
+    font-weight: 800;
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 0.8),
+      0 2px 4px rgba(0, 0, 0, 0.3);
   }
   
-  .celluleBrouillon .contenu-brouillon {
-    font-weight: 700;
+  .celluleSelectionnee {
+    border-width: 3px;
+    box-shadow: 
+      0 0 0 3px rgba(0, 0, 0, 0.8),
+      0 4px 12px rgba(0, 0, 0, 0.4);
   }
   
-  .indicateur-mode-brouillon {
+  .celluleInvalide {
     border-width: 3px;
+    box-shadow: 
+      0 0 0 2px rgba(0, 0, 0, 0.8),
+      0 4px 12px rgba(239, 68, 68, 0.4);
+  }
+  
+  .celluleInitiale {
+    border-width: 2px;
+    border-color: #000;
+    font-weight: 900;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .valeur-brouillon {
+  .cellule {
+    transition: none;
+    animation: none;
+  }
+  
+  .celluleInvalide,
+  .celluleIndice,
+  .cellule.validation-reussie,
+  .cellule.nouvelle-valeur {
+    animation: none;
+  }
+  
+  .cellule:hover,
+  .celluleSelectionnee,
+  .cellule:focus,
+  .cellule:active {
+    transform: none;
+  }
+  
+  .cellule::before,
+  .cellule::after,
+  .celluleSelectionnee::after,
+  .celluleIndice::after {
     animation: none;
   }
 }
 
 /* =============================================
-   INTERACTIONS TACTILES BROUILLON
+   OPTIMISATIONS PERFORMANCE AVANCÉES
    ============================================= */
 
-@media (hover: none) and (pointer: coarse) {
-  .celluleBrouillon:active {
-    transform: scale(0.98);
-    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+.cellule {
+  contain: layout style paint;
+  isolation: isolate;
+  
+  /* Amélioration du rendu des fonts */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Optimisation GPU */
+  transform-style: preserve-3d;
+}
+
+/* =============================================
+   STYLES POUR IMPRESSION OPTIMISÉS
+   ============================================= */
+
+@media print {
+  .cellule {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-weight: bold !important;
+    border-radius: 0 !important;
+    animation: none !important;
   }
   
-  .celluleBrouillon.celluleSelectionnee:active {
-    background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+  .cellule::before,
+  .cellule::after {
+    display: none !important;
+  }
+  
+  .celluleInitiale {
+    background: #f0f0f0 !important;
+    font-weight: 900 !important;
+    border: 2px solid black !important;
+  }
+  
+  .celluleSelectionnee,
+  .celluleSurlignee,
+  .celluleInvalide,
+  .celluleIndice,
+  .celluleCorrecte,
+  .celluleAvertissement {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
   }
 }
 
 /* =============================================
-   ÉTATS SPÉCIAUX BROUILLON
+   MICRO-INTERACTIONS AVANCÉES
    ============================================= */
 
-/* Cellule brouillon avec conflit */
-.celluleBrouillon.celluleAvertissement {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-color: #f59e0b;
+/* Effet de focus progressif */
+.cellule:focus-within {
+  animation: focus-glow 0.3s ease-out;
 }
 
-.celluleBrouillon.celluleAvertissement .contenu-brouillon {
-  color: #d97706;
+@keyframes focus-glow {
+  from {
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  to {
+    box-shadow: 
+      0 0 0 3px rgba(99, 102, 241, 0.2),
+      0 4px 12px rgba(99, 102, 241, 0.15);
+  }
 }
 
-/* Cellule brouillon correcte */
-.celluleBrouillon.celluleCorrecte {
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-  border-color: #22c55e;
+/* Effet de typing pour nouvelle valeur */
+.cellule.typing {
+  animation: typing-effect 0.2s ease-out;
 }
 
-.celluleBrouillon.celluleCorrecte .contenu-brouillon {
-  color: #16a34a;
+@keyframes typing-effect {
+  0% { transform: scale(1.1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
 }
 
-/* =============================================
-   HELPER CLASSES
-   ============================================= */
-
-.mode-brouillon-global {
-  --couleur-brouillon: #3b82f6;
-  --couleur-brouillon-bg: rgba(59, 130, 246, 0.1);
+/* Effet de completion pour grille finie */
+.cellule.completed {
+  animation: completion-wave 0.6s ease-out;
 }
 
-.mode-brouillon-global .cellule:not(.celluleInitiale) {
-  box-shadow: inset 0 0 0 1px var(--couleur-brouillon-bg);
-}
-
-.mode-brouillon-global .cellule:not(.celluleInitiale):hover {
-  box-shadow: inset 0 0 0 2px var(--couleur-brouillon-bg);
-}
-
-/* Indicateur visuel pour le mode brouillon actif */
-.grille-mode-brouillon::before {
-  content: "Mode Brouillon";
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #3b82f6;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  z-index: 1000;
-}
-
-@media (max-width: 480px) {
-  .grille-mode-brouillon::before {
-    top: -25px;
-    font-size: 0.7rem;
-    padding: 3px 8px;
+@keyframes completion-wave {
+  0% { 
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    transform: scale(1);
+  }
+  50% { 
+    background: linear-gradient(145deg, #dcfce7, #bbf7d0);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+  }
+  100% { 
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    transform: scale(1);
   }
 }

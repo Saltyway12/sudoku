@@ -1,12 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import GrilleSudoku from './composants/GrilleSudoku';
-import ClavierMobile from './composants/ClavierMobile';
-import PanneauControles from './composants/PanneauControles';
-import useSudoku from './hooks/useSudoku';
-import useMinuteur from './hooks/useMinuteur';
-import useClavier from './hooks/useClavier';
-import { useDetectionMobile } from './hooks/useDetectionMobile';
-import { DIFFICULTES, STATUTS_JEU, MESSAGES, TOUCHES_NAVIGATION } from './utilitaires/constantes';
+// ✅ Imports des composants selon votre structure
+import GrilleSudoku from './composants/GrilleSudoku/GrilleSudoku.jsx';
+import ClavierMobile from './composants/ClavierMobile.jsx';
+import PanneauControles from './composants/PanneauControles.jsx';
+
+// ✅ Imports des hooks
+import useSudoku from './hooks/useSudoku.js';
+import useMinuteur from './hooks/useMinuteur.js';
+import useClavier from './hooks/useClavier.js';
+import { useDetectionMobile } from './hooks/useDetectionMobile.js';
+
+// ✅ Imports des utilitaires
+import { 
+  DIFFICULTES, 
+  STATUTS_JEU, 
+  MESSAGES, 
+  TOUCHES_NAVIGATION,
+  CLASSES_CSS,
+  DATA_ATTRIBUTES 
+} from './utilitaires/constantes.js';
+
+// ✅ Imports CSS selon votre structure
 import './styles/globals.css';
 import './styles/PanneauControles.css';
 
@@ -117,71 +131,6 @@ const App = () => {
     effacerBrouillonsCellule: sudoku.effacerBrouillonsCellule
   });
 
-  // Adapter la navigation clavier pour supporter le brouillon
-  useEffect(() => {
-    if (estMobile || estTactile) return;
-
-    const gererToucheAppuyee = (e) => {
-      if (!sudoku.celluleSelectionnee || sudoku.statutJeu !== STATUTS_JEU.EN_COURS) return;
-      
-      const { ligne, colonne } = sudoku.celluleSelectionnee;
-      
-      // Gestion des chiffres avec support brouillon
-      if (e.key >= '1' && e.key <= '9') {
-        e.preventDefault();
-        const chiffre = parseInt(e.key);
-        const typeSaisie = (e.altKey || sudoku.modeBrouillon) ? 'brouillon' : 'normal';
-        sudoku.mettreAJourCellule(ligne, colonne, chiffre, typeSaisie);
-      }
-      
-      // Gestion de l'effacement
-      if (e.key === TOUCHES_NAVIGATION.RETOUR_ARRIERE || e.key === TOUCHES_NAVIGATION.SUPPRIMER) {
-        e.preventDefault();
-        const effacerBrouillons = e.shiftKey;
-        const typeSaisie = effacerBrouillons ? 'brouillon' : 'normal';
-        sudoku.mettreAJourCellule(ligne, colonne, 0, typeSaisie);
-      }
-      
-      // Basculer le mode brouillon
-      if (e.key === 'b' || e.key === 'B' || e.key === ' ') {
-        e.preventDefault();
-        sudoku.basculerModeBrouillon();
-      }
-      
-      // Obtenir un indice
-      if (e.key === 'h' || e.key === 'H') {
-        e.preventDefault();
-        gererObtenirIndice();
-      }
-      
-      // Annuler un mouvement
-      if (e.key === 'u' || e.key === 'U' || (e.ctrlKey && e.key === 'z')) {
-        e.preventDefault();
-        gererAnnuler();
-      }
-      
-      // Navigation avec les flèches
-      if ([TOUCHES_NAVIGATION.FLECHE_HAUT, TOUCHES_NAVIGATION.FLECHE_BAS, TOUCHES_NAVIGATION.FLECHE_GAUCHE, TOUCHES_NAVIGATION.FLECHE_DROITE].includes(e.key)) {
-        e.preventDefault();
-        let nouvelleLigne = ligne;
-        let nouvelleColonne = colonne;
-        
-        switch (e.key) {
-          case TOUCHES_NAVIGATION.FLECHE_HAUT: nouvelleLigne = Math.max(0, ligne - 1); break;
-          case TOUCHES_NAVIGATION.FLECHE_BAS: nouvelleLigne = Math.min(8, ligne + 1); break;
-          case TOUCHES_NAVIGATION.FLECHE_GAUCHE: nouvelleColonne = Math.max(0, colonne - 1); break;
-          case TOUCHES_NAVIGATION.FLECHE_DROITE: nouvelleColonne = Math.min(8, colonne + 1); break;
-          default: break;
-        }
-        
-        sudoku.selectionnerCellule(nouvelleLigne, nouvelleColonne);
-      }
-    };
-
-    window.addEventListener('keydown', gererToucheAppuyee);
-    return () => window.removeEventListener('keydown', gererToucheAppuyee);
-  }, [sudoku, estMobile, estTactile, gererObtenirIndice, gererAnnuler]);
-
   // Gestion de la sélection de cellule
   const gererSelectionCellule = useCallback((ligne, colonne) => {
     sudoku.selectionnerCellule(ligne, colonne);
@@ -226,7 +175,7 @@ const App = () => {
   // Obtenir les statistiques pour le panneau
   const statistiques = sudoku.obtenirStatistiques();
 
-  // Classes CSS conditionnelles pour l'appareil
+  // Classes CSS conditionnelles pour l'appareil - Utilisation des nouvelles classes
   const classesApp = `app ${classeAppareil} ${estTactile ? 'tactile' : 'souris'} ${sudoku.modeBrouillon ? 'mode-brouillon-global' : ''}`;
 
   // Effet pour la notification de fin de partie
@@ -242,9 +191,9 @@ const App = () => {
 
   return (
     <div className={classesApp}>
-      <header className="app-header">
+      <header className="en-tete-principal">
         <div className="conteneur-titre-principal">
-          <h1>Sudoku Interactif</h1>
+          <h1 className="titre-principal">Sudoku Interactif</h1>
           
           {/* Badge de difficulté */}
           <div 
@@ -262,18 +211,19 @@ const App = () => {
           )}
         </div>
         
-        <div className="info-jeu">
-          <div className="minuteur">
+        <div className="informations-jeu">
+          <div className="carte-info minuteur">
             <span className="icone-minuteur">⏱️</span>
             <span>Temps: {minuteur.formaterTemps()}</span>
             {minuteur.estEnPause && <span className="indicateur-pause">⏸️</span>}
           </div>
           
-          <div className="statut">
+          <div className="carte-info statut-jeu">
+            <span className="indicateur-statut"></span>
             {obtenirMessageStatut()}
           </div>
           
-          <div className="progression-rapide">
+          <div className="carte-info progression-rapide">
             <span>{sudoku.pourcentageCompletion}%</span>
             <div className="barre-progression-mini">
               <div 
@@ -288,101 +238,98 @@ const App = () => {
         </div>
       </header>
 
-      <main className="conteneur-jeu-principal">
+      <main className="zone-jeu-principale">
         
-        {/* Section grille et contrôles anciens (mobile) ou grille seule (desktop) */}
-        <div className="section-jeu-principale">
-          
-          {/* Contrôles compacts pour mobile */}
-          {estMobile && (
-            <div className="controles-compacts-mobile">
-              <div className="selecteur-difficulte-mobile">
-                <label htmlFor="difficulte-mobile">Difficulté:</label>
-                <select
-                  id="difficulte-mobile"
-                  value={difficulte}
-                  onChange={(e) => gererChangementDifficulte(e.target.value)}
-                >
-                  <option value={DIFFICULTES.FACILE}>Facile</option>
-                  <option value={DIFFICULTES.MOYEN}>Moyen</option>
-                  <option value={DIFFICULTES.DIFFICILE}>Difficile</option>
-                </select>
-              </div>
-
-              <div className="boutons-rapides-mobile">
-                <button 
-                  onClick={gererBasculerBrouillon} 
-                  className={`btn btn-brouillon ${sudoku.modeBrouillon ? 'actif' : ''}`}
-                >
-                  📝 {sudoku.modeBrouillon ? 'Brouillon' : 'Normal'}
-                </button>
-                <button
-                  onClick={gererObtenirIndice}
-                  className="btn btn-indice"
-                  disabled={sudoku.indicesRestants === 0 || sudoku.statutJeu !== STATUTS_JEU.EN_COURS}
-                >
-                  💡 Indice ({sudoku.indicesRestants})
-                </button>
-              </div>
+        {/* Contrôles compacts pour mobile */}
+        {estMobile && (
+          <div className="controles-compacts-mobile">
+            <div className="selecteur-difficulte">
+              <label htmlFor="difficulte-mobile">Difficulté:</label>
+              <select
+                id="difficulte-mobile"
+                value={difficulte}
+                onChange={(e) => gererChangementDifficulte(e.target.value)}
+                className="select-difficulte"
+              >
+                <option value={DIFFICULTES.FACILE}>Facile</option>
+                <option value={DIFFICULTES.MOYEN}>Moyen</option>
+                <option value={DIFFICULTES.DIFFICILE}>Difficile</option>
+              </select>
             </div>
-          )}
 
-          {/* Conteneur de la grille */}
-          <div className="conteneur-grille">
-            <GrilleSudoku
-              grille={sudoku.grilleActuelle}
-              grilleInitiale={sudoku.grilleInitiale}
-              grilleBrouillon={sudoku.grilleBrouillon}
-              celluleSelectionnee={sudoku.celluleSelectionnee}
-              onChangementCellule={sudoku.mettreAJourCellule}
-              onSelectionCellule={gererSelectionCellule}
-              cellulesInvalides={sudoku.cellulesInvalides}
-              modeBrouillon={sudoku.modeBrouillon}
-              obtenirBrouillonCellule={sudoku.obtenirBrouillonCellule}
-              estCelluleEnBrouillon={sudoku.estCelluleEnBrouillon}
-              estMobile={estMobile}
-              estTactile={estTactile}
-            />
+            <div className="boutons-rapides-mobile">
+              <button 
+                onClick={gererBasculerBrouillon} 
+                className={`btn btn-brouillon ${sudoku.modeBrouillon ? 'actif' : ''}`}
+              >
+                📝 {sudoku.modeBrouillon ? 'Brouillon' : 'Normal'}
+              </button>
+              <button
+                onClick={gererObtenirIndice}
+                className="btn btn-indice"
+                disabled={sudoku.indicesRestants === 0 || sudoku.statutJeu !== STATUTS_JEU.EN_COURS}
+              >
+                💡 Indice ({sudoku.indicesRestants})
+              </button>
+            </div>
           </div>
+        )}
 
-          {/* Statistiques rapides pour mobile */}
-          {estMobile && (
-            <div className="statistiques-rapides-mobile">
-              <div className="stat-rapide">
-                <span className="label-stat">Mouvements:</span>
-                <span className="valeur-stat">{statistiques.nombreMouvements}</span>
-              </div>
-              <div className="stat-rapide">
-                <span className="label-stat">Erreurs:</span>
-                <span className="valeur-stat">{statistiques.nombreErreurs}</span>
-              </div>
-              <div className="stat-rapide">
-                <span className="label-stat">Indices:</span>
-                <span className="valeur-stat">{sudoku.indicesUtilises}/{sudoku.configurationDifficulte?.maxIndices}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Instructions conditionnelles */}
-          {estDesktop && (
-            <div className="instructions-desktop">
-              <p>
-                <kbd>1-9</kbd> Saisir • <kbd>B</kbd> Brouillon • <kbd>H</kbd> Indice • 
-                <kbd>U</kbd> Annuler • <kbd>Alt+1-9</kbd> Brouillon forcé
-              </p>
-            </div>
-          )}
-          
-          {estMobile && (
-            <div className="instructions-mobile">
-              <p>Appuyez sur une cellule pour saisir. Mode brouillon: notez plusieurs possibilités par case.</p>
-            </div>
-          )}
+        {/* Conteneur de la grille */}
+        <div className="conteneur-grille">
+          <GrilleSudoku
+            grille={sudoku.grilleActuelle}
+            grilleInitiale={sudoku.grilleInitiale}
+            grilleBrouillon={sudoku.grilleBrouillon}
+            celluleSelectionnee={sudoku.celluleSelectionnee}
+            onChangementCellule={sudoku.mettreAJourCellule}
+            onSelectionCellule={gererSelectionCellule}
+            cellulesInvalides={sudoku.cellulesInvalides}
+            modeBrouillon={sudoku.modeBrouillon}
+            obtenirBrouillonCellule={sudoku.obtenirBrouillonCellule}
+            estCelluleEnBrouillon={sudoku.estCelluleEnBrouillon}
+            estMobile={estMobile}
+            estTactile={estTactile}
+          />
         </div>
+
+        {/* Statistiques rapides pour mobile */}
+        {estMobile && (
+          <div className="statistiques-rapides-mobile">
+            <div className="stat-rapide">
+              <span className="label-stat">Mouvements:</span>
+              <span className="valeur-stat">{statistiques.nombreMouvements}</span>
+            </div>
+            <div className="stat-rapide">
+              <span className="label-stat">Erreurs:</span>
+              <span className="valeur-stat">{statistiques.nombreErreurs}</span>
+            </div>
+            <div className="stat-rapide">
+              <span className="label-stat">Indices:</span>
+              <span className="valeur-stat">{sudoku.indicesUtilises}/{sudoku.configurationDifficulte?.maxIndices}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Instructions conditionnelles */}
+        {estDesktop && (
+          <div className="instructions-desktop">
+            <p>
+              <kbd>1-9</kbd> Saisir • <kbd>B</kbd> Brouillon • <kbd>H</kbd> Indice • 
+              <kbd>U</kbd> Annuler • <kbd>Alt+1-9</kbd> Brouillon forcé
+            </p>
+          </div>
+        )}
+        
+        {estMobile && (
+          <div className="instructions-mobile">
+            <p>Appuyez sur une cellule pour saisir. Mode brouillon: notez plusieurs possibilités par case.</p>
+          </div>
+        )}
 
         {/* Panneau de contrôles complet pour desktop */}
         {estDesktop && (
-          <aside className="section-panneau-controles">
+          <aside className="panneau-controles-principal">
             <PanneauControles
               difficulte={sudoku.difficulteActuelle}
               modeBrouillon={sudoku.modeBrouillon}

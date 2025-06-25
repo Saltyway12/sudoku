@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import Cellule from '../Cellule';
-import { CLASSES_CSS } from '../../utilitaires/constantes.js';
+import Cellule from '../Cellule/Cellule.jsx';
+import styles from './GrilleSudoku.module.css';
 
 const GrilleSudoku = React.memo(({ 
   grille, 
@@ -57,14 +57,12 @@ const GrilleSudoku = React.memo(({
     const elementsGrille = [];
     
     for (let ligne = 0; ligne < 9; ligne++) {
-      const elementsLigne = [];
-      
       for (let colonne = 0; colonne < 9; colonne++) {
         // Obtenir les brouillons pour cette cellule
         const brouillons = obtenirBrouillonCellule ? 
           obtenirBrouillonCellule(ligne, colonne) : [];
         
-        elementsLigne.push(
+        elementsGrille.push(
           <Cellule
             key={`${ligne}-${colonne}`}
             valeur={grille[ligne][colonne]}
@@ -82,12 +80,6 @@ const GrilleSudoku = React.memo(({
           />
         );
       }
-      
-      elementsGrille.push(
-        <div key={ligne} className={`ligne-grille ${CLASSES_CSS.LIGNE_GRILLE}`}>
-          {elementsLigne}
-        </div>
-      );
     }
     
     return elementsGrille;
@@ -103,13 +95,13 @@ const GrilleSudoku = React.memo(({
     gererChangementCellule
   ]);
 
-  // Classes CSS pour la grille
+  // Classes CSS pour la grille avec CSS modules
   const classesGrille = useMemo(() => {
-    const classes = [`grille-sudoku`, CLASSES_CSS.GRILLE];
+    const classes = [styles.grilleSudoku];
     
-    if (estMobile) classes.push('grille-mobile');
-    if (estTactile) classes.push('grille-tactile');
-    if (modeBrouillon) classes.push('grille-mode-brouillon');
+    if (estMobile) classes.push(styles.grilleMobile);
+    if (estTactile) classes.push(styles.grilleTactile);
+    if (modeBrouillon) classes.push(styles.grilleModeBrouillon);
     
     return classes.join(' ');
   }, [estMobile, estTactile, modeBrouillon]);

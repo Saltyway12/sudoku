@@ -1,8 +1,9 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import { CLASSES_CSS, TYPES_SAISIE } from '../../utilitaires/constantes.js'; // Correction du chemin
+import styles from './Cellule.module.css';
+import { TYPES_SAISIE } from '../../utilitaires/constantes.js';
 
 /**
- * Composant Cellule simplifié mais fonctionnel
+ * Composant Cellule avec CSS modules
  */
 const Cellule = memo(({
   valeur = 0,
@@ -19,15 +20,15 @@ const Cellule = memo(({
   surSaisie
 }) => {
 
-  // Calculer les classes CSS
+  // Calculer les classes CSS avec CSS modules
   const classesCellule = useMemo(() => {
-    const classes = [CLASSES_CSS.CELLULE_BASE];
+    const classes = [styles.cellule];
     
-    if (estInitiale) classes.push(CLASSES_CSS.CELLULE_INITIALE);
-    if (estSelectionnee) classes.push(CLASSES_CSS.CELLULE_SELECTIONNEE);
-    if (estSurlignee) classes.push(CLASSES_CSS.CELLULE_SURLIGNEE);
-    if (estInvalide) classes.push(CLASSES_CSS.CELLULE_INVALIDE);
-    if (brouillons.length > 0) classes.push(CLASSES_CSS.CELLULE_BROUILLON);
+    if (estInitiale) classes.push(styles.celluleInitiale);
+    if (estSelectionnee) classes.push(styles.celluleSelectionnee);
+    if (estSurlignee) classes.push(styles.celluleSurlignee);
+    if (estInvalide) classes.push(styles.celluleInvalide);
+    if (brouillons.length > 0) classes.push(styles.celluleBrouillon);
     
     return classes.join(' ');
   }, [estInitiale, estSelectionnee, estSurlignee, estInvalide, brouillons.length]);
@@ -72,8 +73,8 @@ const Cellule = memo(({
     // Si la cellule a une valeur définie
     if (valeur !== 0) {
       return (
-        <div className="conteneur-valeur-definitive">
-          <span className="valeur-definitive">
+        <div className={styles.conteneurValeurDefinitive}>
+          <span className={styles.valeurDefinitive}>
             {valeur}
           </span>
         </div>
@@ -83,8 +84,8 @@ const Cellule = memo(({
     // Si la cellule a des brouillons
     if (brouillons.length > 0) {
       return (
-        <div className="conteneur-brouillon">
-          <div className="grille-brouillon">
+        <div className={styles.conteneurBrouillon}>
+          <div className={styles.contenuBrouillon}>
             {Array.from({ length: 9 }, (_, index) => {
               const numero = index + 1;
               const estPresent = brouillons.includes(numero);
@@ -92,13 +93,9 @@ const Cellule = memo(({
               return (
                 <div 
                   key={`brouillon-${numero}`}
-                  className={`case-brouillon ${estPresent ? 'presente' : 'vide'}`}
+                  className={`${styles.valeurBrouillon} ${estPresent ? styles.presente : styles.vide}`}
                 >
-                  {estPresent && (
-                    <span className="valeur-brouillon">
-                      {numero}
-                    </span>
-                  )}
+                  {estPresent && numero}
                 </div>
               );
             })}
@@ -109,9 +106,9 @@ const Cellule = memo(({
     
     // Cellule vide
     return (
-      <div className="conteneur-vide">
+      <div className={styles.conteneurVide}>
         {estSelectionnee && (
-          <span className="curseur-saisie">|</span>
+          <span className={styles.curseurSaisie}>|</span>
         )}
       </div>
     );
@@ -177,13 +174,13 @@ const Cellule = memo(({
       
       {/* Indicateurs visuels */}
       {estInvalide && (
-        <div className="indicateur-erreur" title="Cette valeur entre en conflit">
+        <div className={styles.indicateurErreur} title="Cette valeur entre en conflit">
           ❌
         </div>
       )}
       
       {modeBrouillonGlobal && !estInitiale && valeur === 0 && (
-        <div className="indicateur-mode-brouillon" title="Mode brouillon actif">
+        <div className={styles.indicateurModeBrouillon} title="Mode brouillon actif">
           📝
         </div>
       )}

@@ -1,308 +1,103 @@
 /* =============================================
-   GRILLE SUDOKU RESPONSIVE ULTRA-OPTIMISÉE
+   GRILLE SUDOKU 9x9 PARFAITE - CSS MODULES
    ============================================= */
 
 .grilleSudoku {
-  /* Grille CSS moderne avec délimitation claire */
+  /* Grille CSS 9x9 avec bordures intégrées */
   display: grid;
   grid-template-columns: repeat(9, var(--taille-cellule-desktop));
   grid-template-rows: repeat(9, var(--taille-cellule-desktop));
-  gap: 1px;
   
-  /* Bordure principale très visible */
-  border: 4px solid #2c3e50;
-  background-color: #2c3e50;
-  border-radius: 12px;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
-  padding: 4px;
+  /* Fond et bordures principales */
+  background-color: var(--couleur-fond-grille);
+  border: var(--bordure-grille) solid var(--couleur-fond-grille);
+  border-radius: var(--rayon-grille);
   
-  /* Animation d'entrée fluide */
-  animation: apparitionGrille 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Espacements entre cellules */
+  gap: var(--gap-cellule);
+  padding: var(--gap-cellule);
   
   /* Centrage et dimensions */
   margin: 0 auto;
   width: fit-content;
-  max-width: 100%;
   position: relative;
-}
-
-/* Suppression de l'ancien système de lignes */
-.ligneGrille {
-  display: contents;
+  
+  /* Ombres et effets visuels */
+  box-shadow: var(--ombre-grille);
+  
+  /* Animation d'entrée */
+  animation: apparitionGrille 0.6s ease-out;
 }
 
 /* =============================================
-   SÉPARATEURS 3x3 ULTRA-VISIBLES
+   SÉPARATEURS SECTIONS 3x3
    ============================================= */
 
-/* Séparateurs verticaux majeurs */
-.grilleSudoku::before,
-.grilleSudoku::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  width: 4px;
-  background-color: #2c3e50;
-  z-index: 10;
-  border-radius: 2px;
+/* Bordures épaisses après chaque 3ème cellule horizontalement */
+.grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n)),
+.grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n)) {
+  border-right: var(--bordure-section) solid var(--couleur-fond-grille);
+  margin-right: var(--bordure-section);
 }
 
-.grilleSudoku::before {
-  left: calc(3 * var(--taille-cellule-desktop) + 7px);
+/* Bordures épaisses après chaque 3ème ligne */
+.grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27),
+.grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: var(--bordure-section) solid var(--couleur-fond-grille);
+  margin-bottom: var(--bordure-section);
 }
 
-.grilleSudoku::after {
-  left: calc(6 * var(--taille-cellule-desktop) + 14px);
+/* Correction pour les coins des sections */
+.grilleSudoku > .cellule:nth-child(21),
+.grilleSudoku > .cellule:nth-child(24),
+.grilleSudoku > .cellule:nth-child(48),
+.grilleSudoku > .cellule:nth-child(51) {
+  border-right: var(--bordure-section) solid var(--couleur-fond-grille);
+  border-bottom: var(--bordure-section) solid var(--couleur-fond-grille);
+  margin-right: var(--bordure-section);
+  margin-bottom: var(--bordure-section);
 }
 
-/* Séparateurs horizontaux via pseudo-éléments additionnels */
-.grilleSudoku {
-  background-image:
-    linear-gradient(
-      to bottom,
-      transparent calc(3 * var(--taille-cellule-desktop) + 7px),
-      #2c3e50 calc(3 * var(--taille-cellule-desktop) + 7px),
-      #2c3e50 calc(3 * var(--taille-cellule-desktop) + 11px),
-      transparent calc(3 * var(--taille-cellule-desktop) + 11px),
-      transparent calc(6 * var(--taille-cellule-desktop) + 14px),
-      #2c3e50 calc(6 * var(--taille-cellule-desktop) + 14px),
-      #2c3e50 calc(6 * var(--taille-cellule-desktop) + 18px),
-      transparent calc(6 * var(--taille-cellule-desktop) + 18px)
-    );
-}
+/* =============================================
+   ANIMATIONS
+   ============================================= */
 
-/* Bordures cellules individuelles pour sections */
-.grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-  border-right: 3px solid #2c3e50;
-  margin-right: 1px;
-}
-
-.grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-.grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-  border-bottom: 3px solid #2c3e50;
-  margin-bottom: 1px;
-}
-
-/* Animation d'apparition */
 @keyframes apparitionGrille {
   from {
     opacity: 0;
-    transform: scale(0.9) rotateX(15deg);
-    filter: blur(4px);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1) rotateX(0deg);
-    filter: blur(0px);
+    transform: scale(1);
   }
 }
 
 /* =============================================
-   RESPONSIVE TABLETTE (768px et moins)
-   ============================================= */
-
-@media (max-width: 768px) {
-  .grilleSudoku {
-    grid-template-columns: repeat(9, var(--taille-cellule-tablette));
-    grid-template-rows: repeat(9, var(--taille-cellule-tablette));
-    border-radius: 10px;
-    border-width: 3px;
-    padding: 3px;
-    box-shadow: 
-      0 8px 25px rgba(0, 0, 0, 0.2),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Ajustement séparateurs pour tablette */
-  .grilleSudoku::before {
-    left: calc(3 * var(--taille-cellule-tablette) + 6px);
-    width: 3px;
-  }
-  
-  .grilleSudoku::after {
-    left: calc(6 * var(--taille-cellule-tablette) + 12px);
-    width: 3px;
-  }
-  
-  .grilleSudoku {
-    background-image:
-      linear-gradient(
-        to bottom,
-        transparent calc(3 * var(--taille-cellule-tablette) + 6px),
-        #2c3e50 calc(3 * var(--taille-cellule-tablette) + 6px),
-        #2c3e50 calc(3 * var(--taille-cellule-tablette) + 9px),
-        transparent calc(3 * var(--taille-cellule-tablette) + 9px),
-        transparent calc(6 * var(--taille-cellule-tablette) + 12px),
-        #2c3e50 calc(6 * var(--taille-cellule-tablette) + 12px),
-        #2c3e50 calc(6 * var(--taille-cellule-tablette) + 15px),
-        transparent calc(6 * var(--taille-cellule-tablette) + 15px)
-      );
-  }
-  
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-width: 2px;
-  }
-  
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-width: 2px;
-  }
-}
-
-/* =============================================
-   RESPONSIVE MOBILE (480px et moins)
-   ============================================= */
-
-@media (max-width: 480px) {
-  .grilleSudoku {
-    /* Grille responsive qui s'adapte parfaitement */
-    grid-template-columns: repeat(9, var(--taille-cellule-mobile));
-    grid-template-rows: repeat(9, var(--taille-cellule-mobile));
-    
-    /* Dimensions fluides */
-    width: calc(9 * var(--taille-cellule-mobile) + 20px);
-    height: calc(9 * var(--taille-cellule-mobile) + 20px);
-    aspect-ratio: 1;
-    
-    border-radius: 8px;
-    border-width: 3px;
-    gap: 1px;
-    padding: 2px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Séparateurs adaptés au mobile */
-  .grilleSudoku::before {
-    left: calc(3 * var(--taille-cellule-mobile) + 5px);
-    width: 3px;
-  }
-  
-  .grilleSudoku::after {
-    left: calc(6 * var(--taille-cellule-mobile) + 8px);
-    width: 3px;
-  }
-  
-  .grilleSudoku {
-    background-image:
-      linear-gradient(
-        to bottom,
-        transparent calc(3 * var(--taille-cellule-mobile) + 5px),
-        #2c3e50 calc(3 * var(--taille-cellule-mobile) + 5px),
-        #2c3e50 calc(3 * var(--taille-cellule-mobile) + 8px),
-        transparent calc(3 * var(--taille-cellule-mobile) + 8px),
-        transparent calc(6 * var(--taille-cellule-mobile) + 8px),
-        #2c3e50 calc(6 * var(--taille-cellule-mobile) + 8px),
-        #2c3e50 calc(6 * var(--taille-cellule-mobile) + 11px),
-        transparent calc(6 * var(--taille-cellule-mobile) + 11px)
-      );
-  }
-  
-  /* Bordures réduites mais visibles sur mobile */
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-width: 2px;
-    margin-right: 0.5px;
-  }
-  
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-width: 2px;
-    margin-bottom: 0.5px;
-  }
-}
-
-/* Très petit mobile (360px et moins) */
-@media (max-width: 360px) {
-  .grilleSudoku {
-    width: calc(9 * var(--taille-cellule-mobile) + 16px);
-    height: calc(9 * var(--taille-cellule-mobile) + 16px);
-    border-radius: 6px;
-    border-width: 2px;
-    padding: 1px;
-  }
-  
-  .grilleSudoku::before {
-    left: calc(3 * var(--taille-cellule-mobile) + 4px);
-    width: 2px;
-  }
-  
-  .grilleSudoku::after {
-    left: calc(6 * var(--taille-cellule-mobile) + 7px);
-    width: 2px;
-  }
-  
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-width: 1px;
-  }
-  
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-width: 1px;
-  }
-}
-
-/* =============================================
-   ÉTATS SPÉCIAUX DU JEU
+   ÉTATS SPÉCIAUX DE LA GRILLE
    ============================================= */
 
 /* Grille en cours de résolution */
 .grilleSudoku[data-solving="true"] {
   pointer-events: none;
   opacity: 0.7;
-  filter: saturate(0.6) blur(1px);
+  filter: blur(1px);
   transition: all 0.3s ease;
 }
 
 /* Grille terminée avec célébration */
 .grilleSudoku[data-completed="true"] {
-  animation: celebration 1.2s ease-in-out;
+  animation: celebration 1s ease-in-out;
   box-shadow: 
-    0 0 40px rgba(40, 167, 69, 0.6),
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 3px rgba(40, 167, 69, 0.3);
-  border-color: #28a745;
+    var(--ombre-grille),
+    0 0 30px rgba(16, 185, 129, 0.5);
 }
 
 @keyframes celebration {
-  0%, 100% { 
-    transform: scale(1) rotate(0deg); 
-  }
-  25% { 
-    transform: scale(1.03) rotate(1deg); 
-  }
-  50% { 
-    transform: scale(1.05) rotate(0deg); 
-  }
-  75% { 
-    transform: scale(1.03) rotate(-1deg); 
-  }
-}
-
-/* Effet de pulsation pour indication */
-.grilleSudoku[data-hint="true"] {
-  animation: pulsation 0.8s ease-in-out 2;
-}
-
-@keyframes pulsation {
-  0%, 100% { 
-    box-shadow: 
-      0 10px 30px rgba(0, 0, 0, 0.25),
-      inset 0 0 0 2px rgba(255, 255, 255, 0.1);
-  }
-  50% { 
-    box-shadow: 
-      0 15px 40px rgba(0, 123, 255, 0.4),
-      inset 0 0 0 3px rgba(0, 123, 255, 0.3);
-  }
-}
-
-/* Grille en pause */
-.grilleSudoku[data-paused="true"] {
-  filter: blur(8px) grayscale(50%);
-  pointer-events: none;
-  transition: filter 0.3s ease;
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.02); }
+  50% { transform: scale(1.05); }
+  75% { transform: scale(1.02); }
 }
 
 /* Grille avec erreurs */
@@ -312,175 +107,161 @@
 
 @keyframes secousseGrille {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Grille en pause */
+.grilleSudoku[data-paused="true"] {
+  filter: blur(8px);
+  pointer-events: none;
+  transition: filter 0.3s ease;
 }
 
 /* =============================================
-   MODE PAYSAGE MOBILE OPTIMISÉ
+   RESPONSIVE TABLETTE
+   ============================================= */
+
+@media (max-width: 768px) {
+  .grilleSudoku {
+    grid-template-columns: repeat(9, var(--taille-cellule-tablette));
+    grid-template-rows: repeat(9, var(--taille-cellule-tablette));
+  }
+}
+
+/* =============================================
+   RESPONSIVE MOBILE
+   ============================================= */
+
+@media (max-width: 480px) {
+  .grilleSudoku {
+    grid-template-columns: repeat(9, var(--taille-cellule-mobile));
+    grid-template-rows: repeat(9, var(--taille-cellule-mobile));
+    
+    /* Ajustements pour mobile */
+    border-width: 2px;
+    border-radius: 8px;
+    gap: 1px;
+    padding: 1px;
+  }
+  
+  /* Bordures réduites sur mobile */
+  .grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n)) {
+    border-right-width: 1px;
+    margin-right: 1px;
+  }
+  
+  .grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54) {
+    border-bottom-width: 1px;
+    margin-bottom: 1px;
+  }
+  
+  .grilleSudoku > .cellule:nth-child(21),
+  .grilleSudoku > .cellule:nth-child(24),
+  .grilleSudoku > .cellule:nth-child(48),
+  .grilleSudoku > .cellule:nth-child(51) {
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 360px) {
+  .grilleSudoku {
+    border-width: 1px;
+    border-radius: 6px;
+  }
+}
+
+/* =============================================
+   MODE PAYSAGE MOBILE
    ============================================= */
 
 @media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
   .grilleSudoku {
-    /* Adaptation pour mode paysage */
     grid-template-columns: repeat(9, var(--taille-cellule-mobile));
     grid-template-rows: repeat(9, var(--taille-cellule-mobile));
-    
-    width: calc(9 * var(--taille-cellule-mobile) + 20px);
-    height: calc(9 * var(--taille-cellule-mobile) + 20px);
-  }
-  
-  .grilleSudoku::before {
-    left: calc(3 * var(--taille-cellule-mobile) + 5px);
-  }
-  
-  .grilleSudoku::after {
-    left: calc(6 * var(--taille-cellule-mobile) + 8px);
   }
 }
 
 /* =============================================
-   THÈME SOMBRE OPTIMISÉ POUR GRILLE
+   THÈME SOMBRE
    ============================================= */
 
 @media (prefers-color-scheme: dark) {
   .grilleSudoku {
-    border-color: #374151;
     background-color: #374151;
+    border-color: #374151;
     box-shadow: 
-      0 10px 30px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 2px rgba(156, 163, 175, 0.1);
+      0 10px 25px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(156, 163, 175, 0.1);
   }
   
   /* Séparateurs thème sombre */
-  .grilleSudoku::before,
-  .grilleSudoku::after {
-    background-color: #374151;
-  }
-  
-  /* Gradients adaptés au thème sombre pour desktop */
-  .grilleSudoku {
-    background-image:
-      linear-gradient(
-        to bottom,
-        transparent calc(3 * var(--taille-cellule-desktop) + 7px),
-        #374151 calc(3 * var(--taille-cellule-desktop) + 7px),
-        #374151 calc(3 * var(--taille-cellule-desktop) + 11px),
-        transparent calc(3 * var(--taille-cellule-desktop) + 11px),
-        transparent calc(6 * var(--taille-cellule-desktop) + 14px),
-        #374151 calc(6 * var(--taille-cellule-desktop) + 14px),
-        #374151 calc(6 * var(--taille-cellule-desktop) + 18px),
-        transparent calc(6 * var(--taille-cellule-desktop) + 18px)
-      );
-  }
-  
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
+  .grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n)) {
     border-right-color: #374151;
   }
   
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
+  .grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: #374151;
+  }
+  
+  .grilleSudoku > .cellule:nth-child(21),
+  .grilleSudoku > .cellule:nth-child(24),
+  .grilleSudoku > .cellule:nth-child(48),
+  .grilleSudoku > .cellule:nth-child(51) {
+    border-right-color: #374151;
     border-bottom-color: #374151;
   }
   
   /* États spéciaux en thème sombre */
   .grilleSudoku[data-completed="true"] {
-    border-color: #059669;
     box-shadow: 
-      0 0 40px rgba(16, 185, 129, 0.5),
-      0 10px 30px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 3px rgba(16, 185, 129, 0.3);
-  }
-  
-  /* Tablette thème sombre */
-  @media (max-width: 768px) {
-    .grilleSudoku {
-      background-image:
-        linear-gradient(
-          to bottom,
-          transparent calc(3 * var(--taille-cellule-tablette) + 6px),
-          #374151 calc(3 * var(--taille-cellule-tablette) + 6px),
-          #374151 calc(3 * var(--taille-cellule-tablette) + 9px),
-          transparent calc(3 * var(--taille-cellule-tablette) + 9px),
-          transparent calc(6 * var(--taille-cellule-tablette) + 12px),
-          #374151 calc(6 * var(--taille-cellule-tablette) + 12px),
-          #374151 calc(6 * var(--taille-cellule-tablette) + 15px),
-          transparent calc(6 * var(--taille-cellule-tablette) + 15px)
-        );
-    }
-  }
-  
-  /* Mobile thème sombre */
-  @media (max-width: 480px) {
-    .grilleSudoku {
-      background-image:
-        linear-gradient(
-          to bottom,
-          transparent calc(3 * var(--taille-cellule-mobile) + 5px),
-          #374151 calc(3 * var(--taille-cellule-mobile) + 5px),
-          #374151 calc(3 * var(--taille-cellule-mobile) + 8px),
-          transparent calc(3 * var(--taille-cellule-mobile) + 8px),
-          transparent calc(6 * var(--taille-cellule-mobile) + 8px),
-          #374151 calc(6 * var(--taille-cellule-mobile) + 8px),
-          #374151 calc(6 * var(--taille-cellule-mobile) + 11px),
-          transparent calc(6 * var(--taille-cellule-mobile) + 11px)
-        );
-    }
+      0 10px 25px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(16, 185, 129, 0.4);
   }
 }
 
 /* =============================================
-   ACCESSIBILITÉ ET PRÉFÉRENCES
+   ACCESSIBILITÉ
    ============================================= */
 
-/* Contraste élevé */
 @media (prefers-contrast: high) {
   .grilleSudoku {
-    border-width: 6px;
+    border-width: 4px;
     border-color: #000;
     background-color: #000;
   }
   
-  .grilleSudoku::before,
-  .grilleSudoku::after {
-    background-color: #000;
-    width: 6px;
-  }
-  
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-width: 4px;
-    border-right-color: #000;
-  }
-  
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-width: 4px;
-    border-bottom-color: #000;
+  .grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54),
+  .grilleSudoku > .cellule:nth-child(21),
+  .grilleSudoku > .cellule:nth-child(24),
+  .grilleSudoku > .cellule:nth-child(48),
+  .grilleSudoku > .cellule:nth-child(51) {
+    border-color: #000;
   }
 }
 
-/* Mouvement réduit */
 @media (prefers-reduced-motion: reduce) {
   .grilleSudoku {
     animation: none;
   }
   
-  .grilleSudoku[data-completed="true"] {
-    animation: none;
-  }
-  
-  .grilleSudoku[data-hint="true"] {
-    animation: none;
-  }
-  
-  .grilleSudoku[data-solving="true"] {
-    transition: none;
-  }
-  
+  .grilleSudoku[data-completed="true"],
   .grilleSudoku[data-errors="true"] {
     animation: none;
   }
   
+  .grilleSudoku[data-solving="true"],
   .grilleSudoku[data-paused="true"] {
     transition: none;
   }
@@ -491,7 +272,7 @@
    ============================================= */
 
 .grilleSudoku {
-  /* Optimisations GPU pour animations fluides */
+  /* Optimisations GPU */
   will-change: transform;
   transform: translateZ(0);
   
@@ -502,57 +283,13 @@
   contain: layout style paint;
 }
 
-/* Conteneur pour interactions tactiles optimisées */
-.conteneur-grille {
-  position: relative;
-  overflow: hidden;
-  touch-action: none;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: fit-content;
-}
-
-.conteneur-grille.mobile-actif {
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
-/* Support pour les écrans haute densité */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .grilleSudoku {
-    border-width: 3px;
-  }
-  
-  .grilleSudoku::before,
-  .grilleSudoku::after {
-    width: 3px;
-  }
-}
-
 /* =============================================
-   ÉTATS DE FOCUS POUR NAVIGATION CLAVIER
+   FOCUS POUR NAVIGATION CLAVIER
    ============================================= */
 
 .grilleSudoku:focus-within {
-  outline: 3px solid rgba(0, 123, 255, 0.5);
+  outline: 3px solid rgba(59, 130, 246, 0.3);
   outline-offset: 4px;
-}
-
-/* Indicateur de mode de saisie */
-.grilleSudoku[data-input-mode="keyboard"] {
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 2px rgba(0, 123, 255, 0.2);
-}
-
-.grilleSudoku[data-input-mode="touch"] {
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 /* =============================================
@@ -560,36 +297,19 @@
    ============================================= */
 
 .grilleSudoku[data-difficulty="facile"] {
-  border-color: #28a745;
+  border-color: #10b981;
 }
 
 .grilleSudoku[data-difficulty="moyen"] {
-  border-color: #ffc107;
+  border-color: #f59e0b;
 }
 
 .grilleSudoku[data-difficulty="difficile"] {
-  border-color: #dc3545;
+  border-color: #ef4444;
 }
 
 .grilleSudoku[data-difficulty="expert"] {
-  border-color: #6f42c1;
-}
-
-/* =============================================
-   GRILLE ADAPTIVE POUR CONTENU DYNAMIQUE
-   ============================================= */
-
-.grilleSudoku.adaptive {
-  min-width: 300px;
-  max-width: 600px;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-}
-
-.grilleSudoku.adaptive > * {
-  min-width: 0;
-  min-height: 0;
+  border-color: #8b5cf6;
 }
 
 /* =============================================
@@ -598,27 +318,22 @@
 
 @media print {
   .grilleSudoku {
-    border: 4px solid #000 !important;
+    border: 3px solid #000 !important;
     background: #fff !important;
     box-shadow: none !important;
     animation: none !important;
     transform: none !important;
     page-break-inside: avoid;
-    width: 90% !important;
-    height: auto !important;
   }
   
-  .grilleSudoku::before,
-  .grilleSudoku::after {
-    background-color: #000 !important;
-  }
-  
-  .grilleSudoku > :nth-child(3n):not(:nth-child(9n)) {
-    border-right-color: #000 !important;
-  }
-  
-  .grilleSudoku > :nth-child(n+19):nth-child(-n+27),
-  .grilleSudoku > :nth-child(n+46):nth-child(-n+54) {
-    border-bottom-color: #000 !important;
+  .grilleSudoku > .cellule:nth-child(3n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(6n):not(:nth-child(9n)),
+  .grilleSudoku > .cellule:nth-child(n+19):nth-child(-n+27),
+  .grilleSudoku > .cellule:nth-child(n+46):nth-child(-n+54),
+  .grilleSudoku > .cellule:nth-child(21),
+  .grilleSudoku > .cellule:nth-child(24),
+  .grilleSudoku > .cellule:nth-child(48),
+  .grilleSudoku > .cellule:nth-child(51) {
+    border-color: #000 !important;
   }
 }
