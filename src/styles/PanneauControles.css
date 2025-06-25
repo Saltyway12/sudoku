@@ -1,0 +1,1028 @@
+/* =============================================
+   STYLES PANNEAU DE CONTRÔLES AVEC BROUILLON - VERSION FRANÇAISE
+   ============================================= */
+
+.panneau-controles {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 420px;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =============================================
+   SECTION SÉLECTION DE DIFFICULTÉ
+   ============================================= */
+
+.section-difficulte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.etiquette-difficulte {
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.selecteur-difficulte {
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.selecteur-difficulte:hover {
+  border-color: #3b82f6;
+  background: #f8fafc;
+}
+
+.selecteur-difficulte:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.selecteur-difficulte:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+/* =============================================
+   SECTION MODE BROUILLON
+   ============================================= */
+
+.section-brouillon {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.04));
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-radius: 14px;
+  position: relative;
+}
+
+.section-brouillon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  border-radius: 14px 14px 0 0;
+}
+
+.bouton-mode-brouillon {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #3b82f6;
+  border-radius: 10px;
+  background: white;
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.bouton-mode-brouillon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.bouton-mode-brouillon:hover::before {
+  left: 100%;
+}
+
+.bouton-mode-brouillon:hover:not(:disabled) {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.bouton-mode-brouillon.actif {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  border-color: #1d4ed8;
+}
+
+.bouton-mode-brouillon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.icone-brouillon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.texte-brouillon {
+  flex: 1;
+  text-align: left;
+  font-weight: 600;
+}
+
+.raccourci-clavier {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Courier New', monospace;
+}
+
+.bouton-mode-brouillon.actif .raccourci-clavier {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.informations-brouillon {
+  text-align: center;
+}
+
+.informations-brouillon small {
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* =============================================
+   SECTION INDICES
+   ============================================= */
+
+.section-indices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.04));
+  border: 2px solid rgba(245, 158, 11, 0.25);
+  border-radius: 14px;
+  position: relative;
+}
+
+.section-indices::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+  border-radius: 14px 14px 0 0;
+}
+
+.compteur-indices {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.etiquette-indices {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.affichage-compteur {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.indices-restants {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.separateur-compteur {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.indices-maximum {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.bouton-indice {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #f59e0b;
+  border-radius: 10px;
+  background: white;
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.bouton-indice::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.bouton-indice:hover::before {
+  left: 100%;
+}
+
+.bouton-indice:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+}
+
+.bouton-indice:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #d1d5db;
+  color: #9ca3af;
+  background: #f9fafb;
+}
+
+.icone-indice {
+  font-size: 1.3rem;
+}
+
+.texte-indice {
+  flex: 1;
+  text-align: left;
+  font-weight: 600;
+}
+
+.avertissement-indices {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.avertissement-indices small {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* =============================================
+   SECTION ACTIONS
+   ============================================= */
+
+.section-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.groupe-actions-principales,
+.groupe-actions-secondaires {
+  display: flex;
+  gap: 0.875rem;
+}
+
+.groupe-actions-principales .bouton {
+  flex: 1;
+}
+
+.groupe-actions-secondaires .bouton {
+  flex: 1;
+}
+
+.bouton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-height: 48px;
+  outline: none;
+}
+
+.bouton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.bouton:hover::before {
+  left: 100%;
+}
+
+.bouton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.bouton:disabled::before {
+  display: none;
+}
+
+.bouton-primaire {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.bouton-primaire:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+}
+
+.bouton-secondaire {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.25);
+}
+
+.bouton-secondaire:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.35);
+}
+
+.bouton-info {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+}
+
+.bouton-info:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.35);
+}
+
+.bouton-avertissement {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+.bouton-avertissement:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
+}
+
+.icone-action {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.bouton .raccourci-clavier {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.4rem;
+}
+
+/* =============================================
+   SECTION STATISTIQUES
+   ============================================= */
+
+.section-statistiques {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.04));
+  border: 2px solid rgba(16, 185, 129, 0.25);
+  border-radius: 14px;
+  position: relative;
+}
+
+.section-statistiques::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 14px 14px 0 0;
+}
+
+.titre-statistiques {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.grille-statistiques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statistique {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+.etiquette-statistique {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.valeur-statistique {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #10b981;
+  line-height: 1;
+}
+
+/* Barre de progression */
+.barre-progression {
+  margin-top: 1.25rem;
+}
+
+.etiquette-progression {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.conteneur-barre-progression {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.barre-progression-remplie {
+  height: 100%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 5px;
+  background: linear-gradient(90deg, currentColor, currentColor);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.pourcentage-affiche {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+/* =============================================
+   SECTION AIDE RACCOURCIS
+   ============================================= */
+
+.section-aide-raccourcis {
+  margin-top: 0.5rem;
+}
+
+.details-raccourcis {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.titre-aide-raccourcis {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+  cursor: pointer;
+  font-weight: 700;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.titre-aide-raccourcis:hover {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+}
+
+.icone-aide {
+  font-size: 1.2rem;
+}
+
+.contenu-aide-raccourcis {
+  padding: 1.25rem;
+  background: white;
+}
+
+.groupe-raccourcis {
+  margin-bottom: 1.25rem;
+}
+
+.groupe-raccourcis:last-child {
+  margin-bottom: 0;
+}
+
+.groupe-raccourcis h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.groupe-raccourcis ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.groupe-raccourcis li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.375rem 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.groupe-raccourcis li:last-child {
+  border-bottom: none;
+}
+
+.groupe-raccourcis kbd {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #374151;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================
+   MESSAGE VICTOIRE
+   ============================================= */
+
+.message-victoire {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-radius: 14px;
+  text-align: center;
+  animation: apparitionVictoire 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes apparitionVictoire {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.icone-victoire {
+  font-size: 2.5rem;
+  animation: rotationVictoire 2s ease-in-out infinite;
+}
+
+@keyframes rotationVictoire {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.texte-victoire h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.texte-victoire p {
+  margin: 0.375rem 0;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+/* =============================================
+   INDICATEUR MODE BROUILLON GLOBAL
+   ============================================= */
+
+.indicateur-mode-brouillon-global {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  z-index: 1000;
+  animation: pulsationIndicateur 2s ease-in-out infinite;
+}
+
+@keyframes pulsationIndicateur {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.icone-mode-global {
+  font-size: 1.1rem;
+}
+
+.texte-mode-global {
+  font-weight: 600;
+}
+
+/* =============================================
+   RESPONSIVE DESIGN
+   ============================================= */
+
+/* Tablette (768px et moins) */
+@media (max-width: 768px) {
+  .panneau-controles {
+    padding: 1.25rem;
+    gap: 1.25rem;
+    max-width: 100%;
+  }
+  
+  .grille-statistiques {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+  }
+  
+  .statistique {
+    padding: 0.875rem;
+  }
+  
+  .valeur-statistique {
+    font-size: 1.5rem;
+  }
+  
+  .groupe-actions-principales,
+  .groupe-actions-secondaires {
+    gap: 0.75rem;
+  }
+  
+  .bouton {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+  
+  .section-brouillon,
+  .section-indices,
+  .section-statistiques {
+    padding: 1rem;
+  }
+  
+  .indicateur-mode-brouillon-global {
+    top: 15px;
+    right: 15px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile (480px et moins) */
+@media (max-width: 480px) {
+  .panneau-controles {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .grille-statistiques {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  .statistique {
+    padding: 0.75rem;
+  }
+  
+  .valeur-statistique {
+    font-size: 1.3rem;
+  }
+  
+  .etiquette-statistique {
+    font-size: 0.75rem;
+  }
+  
+  .groupe-actions-principales,
+  .groupe-actions-secondaires {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .bouton {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+  
+  .section-brouillon,
+  .section-indices,
+  .section-statistiques {
+    padding: 0.875rem;
+  }
+  
+  .message-victoire {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .contenu-aide-raccourcis {
+    padding: 1rem;
+  }
+  
+  .groupe-raccourcis li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+    padding: 0.5rem 0;
+  }
+  
+  .indicateur-mode-brouillon-global {
+    top: 10px;
+    right: 10px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Très petit mobile (360px et moins) */
+@media (max-width: 360px) {
+  .panneau-controles {
+    padding: 0.875rem;
+  }
+  
+  .bouton {
+    padding: 0.65rem;
+    font-size: 0.8rem;
+  }
+  
+  .statistique {
+    padding: 0.6rem;
+  }
+  
+  .valeur-statistique {
+    font-size: 1.1rem;
+  }
+  
+  .section-brouillon,
+  .section-indices,
+  .section-statistiques {
+    padding: 0.75rem;
+  }
+}
+
+/* =============================================
+   THÈME SOMBRE
+   ============================================= */
+
+@media (prefers-color-scheme: dark) {
+  .panneau-controles {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(75, 85, 99, 0.3);
+    color: #f9fafb;
+  }
+  
+  .etiquette-difficulte {
+    color: #f9fafb;
+  }
+  
+  .selecteur-difficulte {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+  
+  .selecteur-difficulte:hover {
+    background: #4b5563;
+    border-color: #60a5fa;
+  }
+  
+  .section-brouillon,
+  .section-indices,
+  .section-statistiques {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  .bouton-mode-brouillon,
+  .bouton-indice {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #6b7280;
+  }
+  
+  .bouton-mode-brouillon:hover:not(:disabled) {
+    background: #60a5fa;
+    border-color: #3b82f6;
+  }
+  
+  .bouton-indice:hover:not(:disabled) {
+    background: #f59e0b;
+    border-color: #d97706;
+  }
+  
+  .statistique {
+    background: #374151;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  
+  .titre-aide-raccourcis {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    color: #f9fafb;
+  }
+  
+  .titre-aide-raccourcis:hover {
+    background: linear-gradient(135deg, #4b5563, #6b7280);
+  }
+  
+  .contenu-aide-raccourcis {
+    background: #1f2937;
+  }
+  
+  .groupe-raccourcis h4 {
+    color: #f9fafb;
+    border-bottom-color: #4b5563;
+  }
+  
+  .groupe-raccourcis li {
+    color: #d1d5db;
+    border-bottom-color: #374151;
+  }
+  
+  .groupe-raccourcis kbd {
+    background: linear-gradient(135deg, #4b5563, #6b7280);
+    border-color: #6b7280;
+    color: #f9fafb;
+  }
+  
+  .details-raccourcis {
+    border-color: #4b5563;
+  }
+  
+  .informations-brouillon small {
+    color: #9ca3af;
+  }
+  
+  .avertissement-indices small {
+    color: #f87171;
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ
+   ============================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .bouton::before,
+  .bouton-mode-brouillon::before,
+  .bouton-indice::before {
+    display: none;
+  }
+  
+  .icone-victoire {
+    animation: none;
+  }
+  
+  .indicateur-mode-brouillon-global {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .panneau-controles {
+    border-width: 3px;
+    border-color: #000;
+  }
+  
+  .bouton,
+  .bouton-mode-brouillon,
+  .bouton-indice,
+  .selecteur-difficulte {
+    border-width: 3px;
+  }
+  
+  .statistique {
+    border-width: 2px;
+  }
+  
+  .section-brouillon,
+  .section-indices,
+  .section-statistiques {
+    border-width: 3px;
+  }
+}
+
+/* Support tactile */
+@media (hover: none) and (pointer: coarse) {
+  .bouton:hover,
+  .bouton-mode-brouillon:hover,
+  .bouton-indice:hover,
+  .selecteur-difficulte:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .bouton::before,
+  .bouton-mode-brouillon::before,
+  .bouton-indice::before {
+    display: none;
+  }
+  
+  .bouton:focus,
+  .bouton-mode-brouillon:focus,
+  .bouton-indice:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.6);
+    outline-offset: 2px;
+  }
+}

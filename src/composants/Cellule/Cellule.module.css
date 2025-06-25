@@ -666,3 +666,282 @@
     border: 2px solid black !important;
   }
 }
+/* =============================================
+   CELLULE AVEC BROUILLON
+   ============================================= */
+
+.celluleBrouillon {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-color: #94a3b8;
+  position: relative;
+  padding: 2px;
+  font-size: inherit;
+}
+
+.celluleBrouillon .contenu-brouillon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1px;
+  width: 100%;
+  height: 100%;
+  font-size: calc(var(--taille-cellule-desktop) * 0.18);
+  font-weight: 500;
+  color: #64748b;
+}
+
+.celluleBrouillon .valeur-brouillon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  font-size: inherit;
+  line-height: 1;
+}
+
+/* Mode brouillon avec cellule sélectionnée */
+.celluleBrouillon.celluleSelectionnee {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 2px rgba(59, 130, 246, 0.3),
+    0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.celluleBrouillon.celluleSelectionnee .contenu-brouillon {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Cellule en mode brouillon avec erreurs */
+.celluleBrouillon.celluleInvalide {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #f87171;
+}
+
+.celluleBrouillon.celluleInvalide .contenu-brouillon {
+  color: #dc2626;
+}
+
+/* Animation d'ajout/suppression de brouillon */
+.valeur-brouillon {
+  animation: apparitionBrouillon 0.2s ease-out;
+}
+
+@keyframes apparitionBrouillon {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =============================================
+   INDICATEUR MODE BROUILLON
+   ============================================= */
+
+.indicateur-mode-brouillon {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  border: 2px solid white;
+  opacity: 0.8;
+}
+
+.cellule[data-mode-brouillon="true"] {
+  outline: 2px dashed rgba(59, 130, 246, 0.3);
+  outline-offset: 1px;
+}
+
+/* =============================================
+   RESPONSIVE POUR BROUILLON
+   ============================================= */
+
+/* Tablette */
+@media (max-width: 768px) {
+  .celluleBrouillon .contenu-brouillon {
+    font-size: calc(var(--taille-cellule-tablette) * 0.2);
+    gap: 0.5px;
+  }
+  
+  .indicateur-mode-brouillon {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .celluleBrouillon {
+    padding: 1px;
+  }
+  
+  .celluleBrouillon .contenu-brouillon {
+    font-size: calc(var(--taille-cellule-mobile) * 0.22);
+    gap: 0.5px;
+  }
+  
+  .indicateur-mode-brouillon {
+    width: 5px;
+    height: 5px;
+    top: -2px;
+    right: -2px;
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 360px) {
+  .celluleBrouillon .contenu-brouillon {
+    font-size: calc(var(--taille-cellule-mobile) * 0.25);
+  }
+}
+
+/* =============================================
+   THÈME SOMBRE POUR BROUILLON
+   ============================================= */
+
+@media (prefers-color-scheme: dark) {
+  .celluleBrouillon {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    border-color: #6b7280;
+  }
+  
+  .celluleBrouillon .contenu-brouillon {
+    color: #9ca3af;
+  }
+  
+  .celluleBrouillon.celluleSelectionnee {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    border-color: #6366f1;
+  }
+  
+  .celluleBrouillon.celluleSelectionnee .contenu-brouillon {
+    color: #c7d2fe;
+  }
+  
+  .celluleBrouillon.celluleInvalide {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    border-color: #ef4444;
+  }
+  
+  .celluleBrouillon.celluleInvalide .contenu-brouillon {
+    color: #fca5a5;
+  }
+  
+  .indicateur-mode-brouillon {
+    background: #60a5fa;
+    border-color: #1f2937;
+  }
+}
+
+/* =============================================
+   ACCESSIBILITÉ BROUILLON
+   ============================================= */
+
+@media (prefers-contrast: high) {
+  .celluleBrouillon {
+    border-width: 3px;
+  }
+  
+  .celluleBrouillon .contenu-brouillon {
+    font-weight: 700;
+  }
+  
+  .indicateur-mode-brouillon {
+    border-width: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .valeur-brouillon {
+    animation: none;
+  }
+}
+
+/* =============================================
+   INTERACTIONS TACTILES BROUILLON
+   ============================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .celluleBrouillon:active {
+    transform: scale(0.98);
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  }
+  
+  .celluleBrouillon.celluleSelectionnee:active {
+    background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+  }
+}
+
+/* =============================================
+   ÉTATS SPÉCIAUX BROUILLON
+   ============================================= */
+
+/* Cellule brouillon avec conflit */
+.celluleBrouillon.celluleAvertissement {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #f59e0b;
+}
+
+.celluleBrouillon.celluleAvertissement .contenu-brouillon {
+  color: #d97706;
+}
+
+/* Cellule brouillon correcte */
+.celluleBrouillon.celluleCorrecte {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #22c55e;
+}
+
+.celluleBrouillon.celluleCorrecte .contenu-brouillon {
+  color: #16a34a;
+}
+
+/* =============================================
+   HELPER CLASSES
+   ============================================= */
+
+.mode-brouillon-global {
+  --couleur-brouillon: #3b82f6;
+  --couleur-brouillon-bg: rgba(59, 130, 246, 0.1);
+}
+
+.mode-brouillon-global .cellule:not(.celluleInitiale) {
+  box-shadow: inset 0 0 0 1px var(--couleur-brouillon-bg);
+}
+
+.mode-brouillon-global .cellule:not(.celluleInitiale):hover {
+  box-shadow: inset 0 0 0 2px var(--couleur-brouillon-bg);
+}
+
+/* Indicateur visuel pour le mode brouillon actif */
+.grille-mode-brouillon::before {
+  content: "Mode Brouillon";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3b82f6;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1000;
+}
+
+@media (max-width: 480px) {
+  .grille-mode-brouillon::before {
+    top: -25px;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}

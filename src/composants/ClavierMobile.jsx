@@ -1,23 +1,18 @@
-// =============================================
-// COMPOSANT CLAVIER NUMÉRIQUE MOBILE
-// =============================================
-
 import React, { useEffect } from 'react';
 import { useDetectionMobile } from '../hooks/useDetectionMobile';
 
 /**
  * Composant clavier numérique optimisé pour mobile
- * @param {Object} props - Propriétés du composant
- * @param {boolean} props.estVisible - Visibilité du clavier
- * @param {Function} props.surSelectionNombre - Callback lors de la sélection d'un nombre
- * @param {Function} props.surFermeture - Callback lors de la fermeture
- * @param {Object} props.celluleSelectionnee - Cellule actuellement sélectionnée
  */
 const ClavierMobile = ({ 
   estVisible, 
   surSelectionNombre, 
   surFermeture, 
-  celluleSelectionnee 
+  celluleSelectionnee,
+  modeBrouillon,
+  surBasculerBrouillon,
+  surObtenirIndice,
+  indicesRestants
 }) => {
   const { estMobile, estTactile } = useDetectionMobile();
 
@@ -124,6 +119,11 @@ const ClavierMobile = ({
                 {obtenirPositionCellule()}
               </p>
             )}
+            {modeBrouillon && (
+              <p className="mode-brouillon-info">
+                📝 Mode brouillon - Notez vos possibilités
+              </p>
+            )}
           </div>
           <button
             className="clavier-fermer"
@@ -132,6 +132,26 @@ const ClavierMobile = ({
             type="button"
           >
             ✕
+          </button>
+        </div>
+
+        {/* Boutons de mode */}
+        <div className="clavier-modes">
+          <button
+            className={`btn-mode ${modeBrouillon ? 'actif' : ''}`}
+            onClick={surBasculerBrouillon}
+            type="button"
+          >
+            📝 {modeBrouillon ? 'Brouillon' : 'Normal'}
+          </button>
+          
+          <button
+            className="btn-indice"
+            onClick={surObtenirIndice}
+            disabled={indicesRestants === 0}
+            type="button"
+          >
+            💡 Indice ({indicesRestants})
           </button>
         </div>
 
@@ -163,7 +183,12 @@ const ClavierMobile = ({
 
         {/* Instructions tactiles */}
         <div className="instructions-clavier">
-          <p>Appuyez sur un nombre pour remplir la cellule</p>
+          <p>
+            {modeBrouillon 
+              ? 'Appuyez sur un nombre pour l\'ajouter/retirer du brouillon'
+              : 'Appuyez sur un nombre pour remplir la cellule'
+            }
+          </p>
         </div>
       </div>
     </>

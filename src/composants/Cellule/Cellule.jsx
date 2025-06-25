@@ -1,145 +1,196 @@
-// =============================================
-// COMPOSANT CELLULE OPTIMISÉ
-// =============================================
-
-import React, { useCallback, useMemo } from 'react';
-import { CLASSES_CSS } from '../../utilitaires/constantes.js';
-import styles from './Cellule.module.css';
+import React, { memo, useCallback, useMemo } from 'react';
+import { CLASSES_CSS, TYPES_SAISIE } from '../../utilitaires/constantes.js'; // Correction du chemin
 
 /**
- * Composant représentant une cellule individuelle du Sudoku
- * Optimisé avec React.memo pour éviter les re-rendus inutiles
+ * Composant Cellule simplifié mais fonctionnel
  */
-const Cellule = React.memo(({ 
-  valeur, 
-  onChange, 
-  estInitiale, 
-  estSelectionnee, 
-  estSurlignee, 
-  estInvalide, 
-  ligne, 
-  colonne, 
-  onSelect,
-  onFocus,
-  onBlur,
-  disabled = false
+const Cellule = memo(({
+  valeur = 0,
+  brouillons = [],
+  estInitiale = false,
+  estSelectionnee = false,
+  estSurlignee = false,
+  estInvalide = false,
+  modeBrouillonGlobal = false,
+  ligne,
+  colonne,
+  indexZone,
+  surSelection,
+  surSaisie
 }) => {
-  
-  // Gestionnaire de changement optimisé
-  const gererChangementSaisie = useCallback((evenement) => {
-    const nouvelleValeur = evenement.target.value;
-    
-    // Validation stricte des entrées
-    if (nouvelleValeur === '') {
-      onChange(ligne, colonne, 0);
-    } else if (/^[1-9]$/.test(nouvelleValeur)) {
-      onChange(ligne, colonne, parseInt(nouvelleValeur, 10));
-    }
-    // Ignorer toute autre entrée
-  }, [ligne, colonne, onChange]);
 
-  // Gestionnaire de clic optimisé
-  const gererClic = useCallback((evenement) => {
-    evenement.stopPropagation();
-    onSelect(ligne, colonne);
-  }, [ligne, colonne, onSelect]);
-
-  // Gestionnaire de focus
-  const gererFocus = useCallback(() => {
-    onSelect(ligne, colonne);
-    if (onFocus) onFocus(ligne, colonne);
-  }, [ligne, colonne, onSelect, onFocus]);
-
-  // Gestionnaire de blur
-  const gererBlur = useCallback(() => {
-    if (onBlur) onBlur(ligne, colonne);
-  }, [ligne, colonne, onBlur]);
-
-  // Gestionnaire de touches optimisé
-  const gererToucheAppuyee = useCallback((evenement) => {
-    const { key } = evenement;
-    
-    // Liste des touches autorisées
-    const touchesAutorisees = [
-      'Backspace', 'Delete', 'Tab', 'Enter',
-      'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'
-    ];
-    
-    const estNombre = /^[1-9]$/.test(key);
-    const estToucheAutorisee = touchesAutorisees.includes(key);
-    
-    // Bloquer toutes les autres touches
-    if (!estNombre && !estToucheAutorisee) {
-      evenement.preventDefault();
-      return;
-    }
-    
-    // Laisser React gérer les touches autorisées
-    // La navigation sera gérée par le hook useClavier
-  }, []);
-
-  // Calcul des classes CSS optimisé avec useMemo
+  // Calculer les classes CSS
   const classesCellule = useMemo(() => {
-    const classes = [styles.cellule, CLASSES_CSS.CELLULE_BASE];
+    const classes = [CLASSES_CSS.CELLULE_BASE];
     
-    if (estInitiale) classes.push(styles.celluleInitiale, CLASSES_CSS.CELLULE_INITIALE);
-    if (estSelectionnee) classes.push(styles.celluleSelectionnee, CLASSES_CSS.CELLULE_SELECTIONNEE);
-    if (estSurlignee) classes.push(styles.celluleSurlignee, CLASSES_CSS.CELLULE_SURLIGNEE);
-    if (estInvalide) classes.push(styles.celluleInvalide, CLASSES_CSS.CELLULE_INVALIDE);
-    if (disabled) classes.push(styles.celluleDesactivee);
+    if (estInitiale) classes.push(CLASSES_CSS.CELLULE_INITIALE);
+    if (estSelectionnee) classes.push(CLASSES_CSS.CELLULE_SELECTIONNEE);
+    if (estSurlignee) classes.push(CLASSES_CSS.CELLULE_SURLIGNEE);
+    if (estInvalide) classes.push(CLASSES_CSS.CELLULE_INVALIDE);
+    if (brouillons.length > 0) classes.push(CLASSES_CSS.CELLULE_BROUILLON);
     
     return classes.join(' ');
-  }, [estInitiale, estSelectionnee, estSurlignee, estInvalide, disabled]);
+  }, [estInitiale, estSelectionnee, estSurlignee, estInvalide, brouillons.length]);
 
-  // Attributs d'accessibilité
-  const attributsAccessibilite = useMemo(() => ({
-    'aria-label': `Cellule ligne ${ligne + 1}, colonne ${colonne + 1}`,
-    'aria-invalid': estInvalide,
-    'aria-describedby': estInvalide ? `erreur-${ligne}-${colonne}` : undefined,
-    'role': 'gridcell',
-    'tabIndex': estSelectionnee ? 0 : -1
-  }), [ligne, colonne, estInvalide, estSelectionnee]);
+  // Gestionnaire de clic
+  const gererClic = useCallback((evenement) => {
+    evenement.preventDefault();
+    evenement.stopPropagation();
+    
+    if (surSelection) {
+      surSelection(ligne, colonne, evenement);
+    }
+  }, [ligne, colonne, surSelection]);
 
-  // Valeur affichée optimisée
-  const valeurAffichee = useMemo(() => {
-    return valeur === 0 ? '' : valeur.toString();
-  }, [valeur]);
+  // Gestionnaire de touches
+  const gererTouche = useCallback((evenement) => {
+    if (!estSelectionnee || !surSaisie) return;
+    
+    const { key, altKey, shiftKey } = evenement;
+    
+    // Gestion des chiffres 1-9
+    if (/^[1-9]$/.test(key)) {
+      evenement.preventDefault();
+      const chiffre = parseInt(key);
+      const forceBrouillon = altKey || modeBrouillonGlobal;
+      const typeSaisie = forceBrouillon ? TYPES_SAISIE.BROUILLON : TYPES_SAISIE.NORMAL;
+      
+      surSaisie(ligne, colonne, chiffre, typeSaisie);
+    } 
+    // Gestion de l'effacement
+    else if (key === 'Backspace' || key === 'Delete' || key === '0') {
+      evenement.preventDefault();
+      const effacerBrouillons = shiftKey;
+      const typeSaisie = effacerBrouillons ? TYPES_SAISIE.BROUILLON : TYPES_SAISIE.NORMAL;
+      
+      surSaisie(ligne, colonne, 0, typeSaisie);
+    }
+  }, [ligne, colonne, surSaisie, modeBrouillonGlobal, estSelectionnee]);
+
+  // Rendu du contenu de la cellule
+  const renduContenu = useMemo(() => {
+    // Si la cellule a une valeur définie
+    if (valeur !== 0) {
+      return (
+        <div className="conteneur-valeur-definitive">
+          <span className="valeur-definitive">
+            {valeur}
+          </span>
+        </div>
+      );
+    }
+    
+    // Si la cellule a des brouillons
+    if (brouillons.length > 0) {
+      return (
+        <div className="conteneur-brouillon">
+          <div className="grille-brouillon">
+            {Array.from({ length: 9 }, (_, index) => {
+              const numero = index + 1;
+              const estPresent = brouillons.includes(numero);
+              
+              return (
+                <div 
+                  key={`brouillon-${numero}`}
+                  className={`case-brouillon ${estPresent ? 'presente' : 'vide'}`}
+                >
+                  {estPresent && (
+                    <span className="valeur-brouillon">
+                      {numero}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    
+    // Cellule vide
+    return (
+      <div className="conteneur-vide">
+        {estSelectionnee && (
+          <span className="curseur-saisie">|</span>
+        )}
+      </div>
+    );
+  }, [valeur, brouillons, estSelectionnee]);
+
+  // Attributs pour l'accessibilité
+  const attributsAccessibilite = useMemo(() => {
+    const position = `ligne ${ligne + 1}, colonne ${colonne + 1}`;
+    
+    let description = `Cellule ${position}`;
+    
+    if (valeur !== 0) {
+      description += `, valeur ${valeur}`;
+    } else if (brouillons.length > 0) {
+      description += `, ${brouillons.length} brouillon${brouillons.length > 1 ? 's' : ''}: ${brouillons.join(', ')}`;
+    } else {
+      description += ', cellule vide';
+    }
+    
+    if (estInitiale) {
+      description += ', cellule initiale non modifiable';
+    }
+    
+    if (estInvalide) {
+      description += ', erreur détectée';
+    }
+
+    return {
+      role: 'gridcell',
+      tabIndex: estSelectionnee ? 0 : -1,
+      'aria-label': description,
+      'aria-invalid': estInvalide,
+      'aria-readonly': estInitiale,
+      'aria-selected': estSelectionnee
+    };
+  }, [ligne, colonne, valeur, brouillons, estInitiale, estSelectionnee, estInvalide]);
+
+  // Attributs de données pour le CSS
+  const attributsDonnees = useMemo(() => {
+    return {
+      'data-ligne': ligne,
+      'data-colonne': colonne,
+      'data-valeur': valeur,
+      'data-zone': indexZone,
+      'data-est-initiale': estInitiale,
+      'data-est-selectionnee': estSelectionnee,
+      'data-est-surlignee': estSurlignee,
+      'data-est-invalide': estInvalide,
+      'data-nombre-brouillons': brouillons.length,
+      'data-peut-modifier': !estInitiale
+    };
+  }, [ligne, colonne, valeur, indexZone, estInitiale, estSelectionnee, estSurlignee, estInvalide, brouillons.length]);
 
   return (
-    <>
-      <input
-        type="text"
-        className={classesCellule}
-        value={valeurAffichee}
-        onChange={gererChangementSaisie}
-        onClick={gererClic}
-        onFocus={gererFocus}
-        onBlur={gererBlur}
-        onKeyDown={gererToucheAppuyee}
-        maxLength={1}
-        disabled={estInitiale || disabled}
-        data-ligne={ligne}
-        data-colonne={colonne}
-        data-testid={`cellule-${ligne}-${colonne}`}
-        {...attributsAccessibilite}
-      />
+    <div
+      className={classesCellule}
+      onClick={gererClic}
+      onKeyDown={gererTouche}
+      {...attributsAccessibilite}
+      {...attributsDonnees}
+    >
+      {renduContenu}
       
-      {/* Message d'erreur pour l'accessibilité */}
+      {/* Indicateurs visuels */}
       {estInvalide && (
-        <div 
-          id={`erreur-${ligne}-${colonne}`} 
-          className={styles.messageErreur}
-          role="alert"
-          aria-live="polite"
-        >
-          Valeur invalide
+        <div className="indicateur-erreur" title="Cette valeur entre en conflit">
+          ❌
         </div>
       )}
-    </>
+      
+      {modeBrouillonGlobal && !estInitiale && valeur === 0 && (
+        <div className="indicateur-mode-brouillon" title="Mode brouillon actif">
+          📝
+        </div>
+      )}
+    </div>
   );
 });
 
-// Définir le nom du composant pour le debugging
-Cellule.displayName = 'Cellule';
+Cellule.displayName = 'CelluleSudoku';
 
 export default Cellule;
